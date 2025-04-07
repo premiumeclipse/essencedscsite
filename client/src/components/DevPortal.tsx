@@ -132,7 +132,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`sm:max-w-md relative overflow-hidden
+      <DialogContent className={`w-[95%] max-w-md mx-auto relative overflow-hidden
         ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
         ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
         ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
@@ -278,13 +278,14 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
               </TabsContent>
             </Tabs>
 
-            <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between sm:space-x-2">
+            <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between gap-2">
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleLogout}
                 size="sm"
                 className={`
+                  mb-2 sm:mb-0
                   ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-950/30 text-foreground' : ''}
                   ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-950/30 text-foreground' : ''}
                   ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-950/30 text-foreground' : ''}
@@ -298,6 +299,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                 variant="secondary"
                 onClick={() => onOpenChange(false)}
                 className={`
+                  w-full sm:w-auto
                   ${theme === 'christmas' ? 'bg-red-600/20 hover:bg-red-600/30 text-red-700' : ''}
                   ${theme === 'halloween' ? 'bg-orange-600/20 hover:bg-orange-600/30 text-orange-700' : ''}
                   ${theme === 'thanksgiving' ? 'bg-amber-600/20 hover:bg-amber-600/30 text-amber-700' : ''}
@@ -355,12 +357,13 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                     </span>
                   </p>
                   
-                  <div className="flex justify-between pt-4">
+                  <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-2 pt-4">
                     <Button 
                       type="button" 
                       variant="outline"
                       onClick={() => setIsLoggingIn(false)}
                       className={`
+                        mb-2 sm:mb-0
                         ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-950/30 text-foreground' : ''}
                         ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-950/30 text-foreground' : ''}
                         ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-950/30 text-foreground' : ''}
@@ -372,6 +375,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                     <Button 
                       type="submit"
                       className={`
+                        w-full sm:w-auto
                         ${theme === 'christmas' ? 'bg-red-600 hover:bg-red-700 text-white' : ''}
                         ${theme === 'halloween' ? 'bg-orange-600 hover:bg-orange-700 text-white' : ''}
                         ${theme === 'thanksgiving' ? 'bg-amber-600 hover:bg-amber-700 text-white' : ''}
@@ -475,6 +479,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                           size="sm"
                           onClick={() => setIsLoggingIn(true)}
                           className={`
+                            w-full sm:w-auto flex items-center justify-center
                             ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-600/20 text-red-600 hover:text-red-700' : ''}
                             ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-600/20 text-orange-600 hover:text-orange-700' : ''}
                             ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-600/20 text-amber-600 hover:text-amber-700' : ''}
@@ -505,12 +510,13 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                   </TabsContent>
                 </Tabs>
 
-                <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
                   <Button
                     type="button"
                     variant="secondary"
                     onClick={() => onOpenChange(false)}
                     className={`
+                      w-full sm:w-auto
                       ${theme === 'christmas' ? 'bg-red-600/20 hover:bg-red-600/30 text-red-700' : ''}
                       ${theme === 'halloween' ? 'bg-orange-600/20 hover:bg-orange-600/30 text-orange-700' : ''}
                       ${theme === 'thanksgiving' ? 'bg-amber-600/20 hover:bg-amber-600/30 text-amber-700' : ''}

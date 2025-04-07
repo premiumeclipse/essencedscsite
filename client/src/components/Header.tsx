@@ -77,6 +77,7 @@ export default function Header() {
     if (isAuthenticated) {
       setIsDevPortalOpen(true);
     } else {
+      // Prompt user for password 
       setIsAuthModalOpen(true);
     }
     
@@ -184,7 +185,7 @@ export default function Header() {
       
       {/* Auth Modal Dialog */}
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
-        <DialogContent className={`sm:max-w-md relative overflow-hidden
+        <DialogContent className={`w-[95%] max-w-md mx-auto relative overflow-hidden
           ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
           ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
           ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
@@ -250,12 +251,13 @@ export default function Header() {
               </div>
             </div>
             
-            <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between pt-4">
+            <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between pt-4 gap-2">
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsAuthModalOpen(false)}
                 className={`
+                  mb-2 sm:mb-0
                   ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-950/30 text-foreground' : ''}
                   ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-950/30 text-foreground' : ''}
                   ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-950/30 text-foreground' : ''}
@@ -267,6 +269,7 @@ export default function Header() {
               <Button 
                 type="submit"
                 className={`
+                  w-full sm:w-auto
                   ${theme === 'christmas' ? 'bg-red-600 hover:bg-red-700 text-white' : ''}
                   ${theme === 'halloween' ? 'bg-orange-600 hover:bg-orange-700 text-white' : ''}
                   ${theme === 'thanksgiving' ? 'bg-amber-600 hover:bg-amber-700 text-white' : ''}
