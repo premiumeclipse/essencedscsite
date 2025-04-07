@@ -8,6 +8,7 @@ import CommandsPage from "@/pages/CommandsPage";
 import SupportPage from "@/pages/SupportPage";
 import MainLayout from "@/layouts/MainLayout";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { DevAuthProvider } from "@/contexts/DevAuthContext";
 
 function Router() {
   return (
@@ -24,10 +25,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <MainLayout>
-          <Router />
-        </MainLayout>
-        <Toaster />
+        <DevAuthProvider>
+          <MainLayout>
+            <Router />
+          </MainLayout>
+          <Toaster />
+        </DevAuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
