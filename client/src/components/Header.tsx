@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Settings, Lock, Key, LogOut, UserCircle, Loader2 } from "lucide-react";
+import { Menu, X, Settings, Lock, Key } from "lucide-react";
 import DevPortal from "./DevPortal";
 import { useDevAuth } from "@/contexts/DevAuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useAuth } from "@/hooks/use-auth";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -16,13 +15,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 
 export default function Header() {
@@ -34,7 +26,6 @@ export default function Header() {
   const { isAuthenticated, login } = useDevAuth();
   const { theme } = useTheme();
   const { toast } = useToast();
-  const { user, logoutMutation } = useAuth();
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -127,56 +118,8 @@ export default function Header() {
             </Button>
           </nav>
           
-          {/* CTA Button & User dropdown */}
+          {/* CTA Button */}
           <div className="flex items-center space-x-4">
-            {user ? (
-              <div className="hidden md:flex items-center space-x-4">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center space-x-2">
-                      <UserCircle className="h-5 w-5" />
-                      <span>{user.username}</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className={`
-                    ${theme === 'christmas' ? 'border-red-600/30' : ''}
-                    ${theme === 'halloween' ? 'border-orange-600/30' : ''}
-                    ${theme === 'thanksgiving' ? 'border-amber-600/30' : ''}
-                  `}>
-                    <DropdownMenuItem onClick={() => navigate("/")}>
-                      Dashboard
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem 
-                      onClick={() => logoutMutation.mutate()}
-                      disabled={logoutMutation.isPending}
-                      className="text-red-500 focus:text-red-500"
-                    >
-                      {logoutMutation.isPending ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Logging out...
-                        </>
-                      ) : (
-                        <>
-                          <LogOut className="mr-2 h-4 w-4" />
-                          Logout
-                        </>
-                      )}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            ) : (
-              <Button
-                variant="outline"
-                onClick={() => navigate("/auth")}
-                className="hidden md:flex"
-              >
-                Login
-              </Button>
-            )}
-            
             <Button asChild className="hidden md:flex button-glow">
               <a href="https://discord.com/oauth2/authorize" target="_blank" rel="noopener noreferrer">
                 Add to Discord
@@ -223,50 +166,6 @@ export default function Header() {
                 <Settings className="mr-2 h-4 w-4" />
                 DevAccess
               </Button>
-              
-              {user ? (
-                <>
-                  <div className="w-full border-t border-border my-2 pt-2">
-                    <div className="flex items-center px-2 py-1 text-muted-foreground">
-                      <UserCircle className="mr-2 h-4 w-4" />
-                      <span>Logged in as: {user.username}</span>
-                    </div>
-                  </div>
-                  <Button 
-                    variant="ghost"
-                    className="w-full justify-start text-red-500 hover:text-red-600 transition-colors py-2"
-                    onClick={() => {
-                      logoutMutation.mutate();
-                      closeMobileMenu();
-                    }}
-                    disabled={logoutMutation.isPending}
-                  >
-                    {logoutMutation.isPending ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Logging out...
-                      </>
-                    ) : (
-                      <>
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Logout
-                      </>
-                    )}
-                  </Button>
-                </>
-              ) : (
-                <Button 
-                  variant="outline"
-                  className="w-full justify-start transition-colors py-2"
-                  onClick={() => {
-                    navigate("/auth");
-                    closeMobileMenu();
-                  }}
-                >
-                  <UserCircle className="mr-2 h-4 w-4" />
-                  Login/Register
-                </Button>
-              )}
               
               <Button asChild className="w-full mt-2 button-glow">
                 <a 

@@ -1,11 +1,9 @@
 import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Set up authentication routes and middleware
-  setupAuth(app);
+  // API routes setup
   
   // API routes
   const apiRouter = express.Router();
