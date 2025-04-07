@@ -9,6 +9,7 @@ import SupportPage from "@/pages/SupportPage";
 import MainLayout from "@/layouts/MainLayout";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { DevAuthProvider } from "@/contexts/DevAuthContext";
+import ThemeEffectsManager from "@/components/theme-effects/ThemeEffectsManager";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <DevAuthProvider>
+          <ThemeEffectsManager />
           <MainLayout>
             <Router />
           </MainLayout>

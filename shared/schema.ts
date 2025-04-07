@@ -125,3 +125,16 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+// Global Theme schema
+export const globalThemes = pgTable("global_themes", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+});
+
+export const insertGlobalThemeSchema = createInsertSchema(globalThemes).pick({
+  name: true,
+});
+
+export type InsertGlobalTheme = z.infer<typeof insertGlobalThemeSchema>;
+export type GlobalTheme = typeof globalThemes.$inferSelect;

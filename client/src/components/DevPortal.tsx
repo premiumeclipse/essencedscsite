@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme, ThemeType } from "@/contexts/ThemeContext";
-import { Check, Snowflake, Skull, Leaf, Lock, X } from "lucide-react";
+import { Check, Snowflake, Skull, Leaf, Lock, X, Loader2 } from "lucide-react";
 import { useDevAuth } from "@/contexts/DevAuthContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,7 +22,7 @@ interface DevPortalProps {
 }
 
 export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, isLoading } = useTheme();
   const [selectedTab, setSelectedTab] = useState<string>("themes");
   const { isAuthenticated, login, logout } = useDevAuth();
   const [password, setPassword] = useState("");
@@ -37,7 +37,15 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
   ];
 
   const handleThemeChange = (newTheme: ThemeType) => {
+    if (isLoading) return; // Prevent multiple rapid changes
+    
     setTheme(newTheme);
+    
+    toast({
+      title: "Theme Updated",
+      description: `The theme has been changed to ${newTheme} for all users.`,
+      variant: "default"
+    });
   };
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -107,8 +115,13 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                           theme === option.value ? "border-primary" : ""
                         }`}
                         onClick={() => handleThemeChange(option.value)}
+                        disabled={isLoading}
                       >
-                        {option.icon}
+                        {isLoading && theme === option.value ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          option.icon
+                        )}
                         {option.label}
                       </Button>
                     ))}
@@ -246,8 +259,13 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                               theme === option.value ? "border-primary" : ""
                             }`}
                             onClick={() => handleThemeChange(option.value)}
+                            disabled={isLoading}
                           >
-                            {option.icon}
+                            {isLoading && theme === option.value ? (
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            ) : (
+                              option.icon
+                            )}
                             {option.label}
                           </Button>
                         ))}

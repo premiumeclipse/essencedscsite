@@ -86,6 +86,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Global Theme endpoints
+  apiRouter.get("/global-theme", async (_req: Request, res: Response) => {
+    try {
+      const theme = await storage.getGlobalTheme();
+      if (!theme) {
+        return res.status(404).json({ message: "Theme not found" });
+      }
+      res.json(theme);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch global theme" });
+    }
+  });
+  
+  apiRouter.post("/global-theme", async (req: Request, res: Response) => {
+    try {
+      const { name } = req.body;
+      
+      if (!name || typeof name !== 'string') {
+        return res.status(400).json({ message: "Invalid theme name" });
+      }
+      
+      const validThemes = ['default', 'christmas', 'halloween', 'thanksgiving'];
+      if (!validThemes.includes(name)) {
+        return res.status(400).json({ message: "Invalid theme name. Must be one of: " + validThemes.join(', ') });
+      }
+      
+      const updatedTheme = await storage.updateGlobalTheme(name);
+      if (!updatedTheme) {
+        return res.status(500).json({ message: "Failed to update global theme" });
+      }
+      
+      res.json(updatedTheme);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update global theme" });
+    }
+  });
+  
   // Register API routes with /api prefix
   app.use("/api", apiRouter);
 

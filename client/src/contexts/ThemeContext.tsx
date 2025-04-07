@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { apiRequest, queryClient } from '@/lib/queryClient';
 
 // Theme types
 export type ThemeType = 'default' | 'christmas' | 'halloween' | 'thanksgiving';
@@ -6,22 +8,81 @@ export type ThemeType = 'default' | 'christmas' | 'halloween' | 'thanksgiving';
 interface ThemeContextType {
   theme: ThemeType;
   setTheme: (theme: ThemeType) => void;
+  isLoading: boolean;
+}
+
+interface GlobalTheme {
+  id: number;
+  name: ThemeType;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+// API endpoint for global theme
+const THEME_API = '/api/global-theme';
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Get theme from localStorage or use default
-  const [theme, setTheme] = useState<ThemeType>(() => {
+  // Get initial theme from localStorage as a backup
+  const initialTheme = (() => {
     const savedTheme = localStorage.getItem('essence-theme');
     return (savedTheme as ThemeType) || 'default';
+  })();
+
+  const [theme, setLocalTheme] = useState<ThemeType>(initialTheme);
+  
+  // Query to fetch global theme
+  const { isLoading: isQueryLoading } = useQuery<GlobalTheme>({
+    queryKey: [THEME_API],
+    queryFn: async () => {
+      try {
+        const response = await fetch(THEME_API);
+        if (!response.ok) {
+          // If fetch fails, use local theme
+          return { id: 1, name: initialTheme };
+        }
+        const data = await response.json();
+        setLocalTheme(data.name); // Update local state with global theme
+        return data;
+      } catch (error) {
+        // If server error, use local theme
+        console.error("Failed to fetch global theme:", error);
+        return { id: 1, name: initialTheme };
+      }
+    },
+    staleTime: 60 * 1000, // 1 minute
   });
 
-  // Update theme when it changes
-  useEffect(() => {
-    // Save to localStorage
-    localStorage.setItem('essence-theme', theme);
+  // Mutation to update global theme
+  const themeMutation = useMutation({
+    mutationFn: async (newTheme: ThemeType) => {
+      try {
+        const res = await apiRequest('POST', THEME_API, { name: newTheme });
+        return await res.json();
+      } catch (error) {
+        // If server error, just update local
+        console.error("Failed to update global theme:", error);
+        return { id: 1, name: newTheme };
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [THEME_API] });
+    }
+  });
+
+  // Combined loading state
+  const isLoading = isQueryLoading || themeMutation.isPending;
+
+  // Function to update both local and global theme
+  const setTheme = (newTheme: ThemeType) => {
+    if (newTheme === theme && !isQueryLoading) return; // Prevent unnecessary update
     
+    setLocalTheme(newTheme);
+    localStorage.setItem('essence-theme', newTheme);
+    themeMutation.mutate(newTheme);
+  };
+
+  // Update theme styling when it changes
+  useEffect(() => {
     // Apply theme classes to document
     document.body.classList.remove('theme-default', 'theme-christmas', 'theme-halloween', 'theme-thanksgiving');
     document.body.classList.add(`theme-${theme}`);
@@ -57,7 +118,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, isLoading }}>
       {children}
     </ThemeContext.Provider>
   );

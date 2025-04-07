@@ -19,7 +19,10 @@ import {
   type InsertFaq,
   testimonials,
   type Testimonial,
-  type InsertTestimonial
+  type InsertTestimonial,
+  globalThemes,
+  type GlobalTheme,
+  type InsertGlobalTheme
 } from "@shared/schema";
 
 // Expand the storage interface with CRUD methods
@@ -60,6 +63,11 @@ export interface IStorage {
   getTestimonials(): Promise<Testimonial[]>;
   getTestimonial(id: number): Promise<Testimonial | undefined>;
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
+  
+  // Global Theme methods
+  getGlobalTheme(): Promise<GlobalTheme | undefined>;
+  createGlobalTheme(theme: InsertGlobalTheme): Promise<GlobalTheme>;
+  updateGlobalTheme(name: string): Promise<GlobalTheme | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -70,6 +78,7 @@ export class MemStorage implements IStorage {
   private statistics: Map<number, Statistic>;
   private faqs: Map<number, Faq>;
   private testimonials: Map<number, Testimonial>;
+  private globalThemes: Map<number, GlobalTheme>;
   
   currentId: number;
 
@@ -81,10 +90,16 @@ export class MemStorage implements IStorage {
     this.statistics = new Map();
     this.faqs = new Map();
     this.testimonials = new Map();
+    this.globalThemes = new Map();
     this.currentId = 1;
     
     // Initialize with sample data
     this.initSampleData();
+    
+    // Initialize with default theme (directly to avoid async issues in constructor)
+    const themeId = this.currentId++;
+    const defaultTheme: GlobalTheme = { id: themeId, name: 'default' };
+    this.globalThemes.set(themeId, defaultTheme);
   }
 
   private initSampleData() {
@@ -134,9 +149,12 @@ export class MemStorage implements IStorage {
       }
     ];
     
-    featuresData.forEach(feature => {
-      this.createFeature(feature);
-    });
+    // Add features synchronously for the init function
+    for (const feature of featuresData) {
+      const id = this.currentId++;
+      const newFeature: Feature = { ...feature, id };
+      this.features.set(id, newFeature);
+    }
     
     // Command Categories
     const categories: InsertCommandCategory[] = [
@@ -147,12 +165,15 @@ export class MemStorage implements IStorage {
       { name: "Settings", slug: "settings" }
     ];
     
+    // Handle the command categories synchronously for the init function
     const categoryIds: Record<string, number> = {};
     
-    categories.forEach(category => {
-      const createdCategory = this.createCommandCategory(category);
-      categoryIds[category.slug] = createdCategory.id;
-    });
+    for (const category of categories) {
+      const id = this.currentId++;
+      const createdCategory: CommandCategory = { ...category, id };
+      this.commandCategories.set(id, createdCategory);
+      categoryIds[category.slug] = id;
+    }
     
     // Commands
     const commandsData: InsertCommand[] = [
@@ -263,52 +284,61 @@ export class MemStorage implements IStorage {
       }
     ];
     
-    commandsData.forEach(command => {
-      this.createCommand(command);
-    });
+    // Add commands synchronously for the init function
+    for (const command of commandsData) {
+      const id = this.currentId++;
+      const newCommand: Command = { ...command, id };
+      this.commands.set(id, newCommand);
+    }
     
     // Statistics
-    this.createStatistics({
+    const statsId = this.currentId++;
+    const statsData: Statistic = {
+      id: statsId,
       servers: 25432,
       users: 4700000,
       commands_executed: 142000000,
       uptime: "99.9%"
-    });
+    };
+    this.statistics.set(statsId, statsData);
     
     // FAQs
     const faqsData: InsertFaq[] = [
       {
-        question: "How do I add HarmonyBot to my server?",
+        question: "How do I add Essence to my server?",
         answer: "Click the \"Add to Discord\" button on our website, sign in to Discord if prompted, select your server from the dropdown, and authorize the bot with the requested permissions."
       },
       {
-        question: "Is HarmonyBot free to use?",
-        answer: "Yes! HarmonyBot offers a generous free tier with access to most features. We also offer premium tiers with additional features and higher usage limits for power users."
+        question: "Is Essence free to use?",
+        answer: "Yes! Essence offers a generous free tier with access to most features. We also offer premium tiers with additional features and higher usage limits for power users."
       },
       {
-        question: "What permissions does HarmonyBot need?",
-        answer: "HarmonyBot requires different permissions based on the features you want to use. For basic functionality, it needs \"Read Messages\" and \"Send Messages\". For moderation features, it needs additional permissions like \"Kick Members\" or \"Ban Members\"."
+        question: "What permissions does Essence need?",
+        answer: "Essence requires different permissions based on the features you want to use. For basic functionality, it needs \"Read Messages\" and \"Send Messages\". For moderation features, it needs additional permissions like \"Kick Members\" or \"Ban Members\"."
       },
       {
-        question: "How do I configure HarmonyBot for my server?",
+        question: "How do I configure Essence for my server?",
         answer: "Use the `/settings` command in your server to access the configuration dashboard. From there, you can customize moderation settings, command permissions, and more."
       },
       {
-        question: "Can I suggest new features for HarmonyBot?",
+        question: "Can I suggest new features for Essence?",
         answer: "Absolutely! Join our support server and use the #suggestions channel to share your ideas. We regularly implement community suggestions in our updates."
       }
     ];
     
-    faqsData.forEach(faq => {
-      this.createFaq(faq);
-    });
+    // Add FAQs synchronously for the init function
+    for (const faq of faqsData) {
+      const id = this.currentId++;
+      const newFaq: Faq = { ...faq, id };
+      this.faqs.set(id, newFaq);
+    }
     
     // Testimonials
     const testimonialsData: InsertTestimonial[] = [
       {
         name: "Alex Johnson",
         community: "Gaming Community",
-        content: "HarmonyBot transformed our server. The music quality is unmatched and moderation tools save us hours of work each week.",
+        content: "Essence transformed our server. The music quality is unmatched and moderation tools save us hours of work each week.",
         rating: 5
       },
       {
@@ -320,14 +350,17 @@ export class MemStorage implements IStorage {
       {
         name: "Michael Davies",
         community: "Study Group",
-        content: "We use HarmonyBot for our study sessions. The pomodoro timer and background music features help us stay productive together.",
+        content: "We use Essence for our study sessions. The pomodoro timer and background music features help us stay productive together.",
         rating: 5
       }
     ];
     
-    testimonialsData.forEach(testimonial => {
-      this.createTestimonial(testimonial);
-    });
+    // Add testimonials synchronously for the init function
+    for (const testimonial of testimonialsData) {
+      const id = this.currentId++;
+      const newTestimonial: Testimonial = { ...testimonial, id };
+      this.testimonials.set(id, newTestimonial);
+    }
   }
 
   // User methods
@@ -460,6 +493,32 @@ export class MemStorage implements IStorage {
     const testimonial: Testimonial = { ...insertTestimonial, id };
     this.testimonials.set(id, testimonial);
     return testimonial;
+  }
+  
+  // Global Theme methods
+  async getGlobalTheme(): Promise<GlobalTheme | undefined> {
+    // There should only be one global theme, so return the first one
+    return Array.from(this.globalThemes.values())[0];
+  }
+  
+  async createGlobalTheme(insertTheme: InsertGlobalTheme): Promise<GlobalTheme> {
+    const id = this.currentId++;
+    const theme: GlobalTheme = { ...insertTheme, id };
+    this.globalThemes.set(id, theme);
+    return theme;
+  }
+  
+  async updateGlobalTheme(name: string): Promise<GlobalTheme | undefined> {
+    const theme = await this.getGlobalTheme();
+    if (!theme) {
+      // If no theme exists, create a new one
+      return this.createGlobalTheme({ name });
+    }
+    
+    // Update the existing theme
+    const updatedTheme: GlobalTheme = { ...theme, name };
+    this.globalThemes.set(theme.id, updatedTheme);
+    return updatedTheme;
   }
 }
 
