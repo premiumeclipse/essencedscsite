@@ -184,24 +184,40 @@ export default function Header() {
       
       {/* Auth Modal Dialog */}
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
-        <DialogContent className={`sm:max-w-md
-          ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/30 to-green-950/30' : ''}
-          ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/30 to-purple-950/30' : ''}
-          ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/30 to-orange-950/30' : ''}
+        <DialogContent className={`sm:max-w-md relative overflow-hidden
+          ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
+          ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
+          ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
         `}>
-          <DialogHeader>
+          {/* Background Pattern based on theme */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none z-0" 
+               style={{ backgroundImage: 'var(--theme-bg-pattern)' }}></div>
+          
+          <DialogHeader className="relative z-10">
             <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              <Lock className="h-5 w-5 text-red-500" />
+              <Lock className={`h-5 w-5 
+                ${theme === 'christmas' ? 'text-red-500' : ''}
+                ${theme === 'halloween' ? 'text-orange-500' : ''}
+                ${theme === 'thanksgiving' ? 'text-amber-500' : ''}
+                ${theme === 'default' ? 'text-red-500' : ''}
+              `} />
               Developer Authentication
             </DialogTitle>
             <DialogDescription>
               Please enter the developer password to access settings and customization options.
+              <span className="block mt-1 text-xs opacity-70">
+                This area is restricted to authorized personnel only.
+              </span>
             </DialogDescription>
           </DialogHeader>
           
-          <form onSubmit={handleAuthentication} className="space-y-4 py-4">
+          <form onSubmit={handleAuthentication} className="space-y-4 py-4 relative z-10">
             <div className="space-y-2">
-              <Label htmlFor="dev-password">Developer Password</Label>
+              <Label htmlFor="dev-password" className={`
+                ${theme === 'christmas' ? 'text-red-200' : ''}
+                ${theme === 'halloween' ? 'text-orange-200' : ''}
+                ${theme === 'thanksgiving' ? 'text-amber-200' : ''}
+              `}>Developer Password</Label>
               <Input
                 id="dev-password"
                 type="password"
@@ -210,19 +226,28 @@ export default function Header() {
                 placeholder="Enter password"
                 autoComplete="off"
                 className={`
-                  ${theme === 'christmas' ? 'border-red-600/30 focus-visible:ring-red-500' : ''}
-                  ${theme === 'halloween' ? 'border-orange-600/30 focus-visible:ring-orange-500' : ''}
-                  ${theme === 'thanksgiving' ? 'border-amber-600/30 focus-visible:ring-amber-500' : ''}
+                  ${theme === 'christmas' ? 'border-red-600/40 focus-visible:ring-red-500 bg-background/60' : ''}
+                  ${theme === 'halloween' ? 'border-orange-600/40 focus-visible:ring-orange-500 bg-background/60' : ''}
+                  ${theme === 'thanksgiving' ? 'border-amber-600/40 focus-visible:ring-amber-500 bg-background/60' : ''}
+                  ${theme === 'default' ? 'border-border/80 bg-background/60' : ''}
                 `}
               />
             </div>
             
             <div className="flex justify-center pt-4">
-              <Key className={`h-16 w-16 text-muted-foreground/30
-                ${theme === 'christmas' ? 'text-red-600/40' : ''}
-                ${theme === 'halloween' ? 'text-orange-600/40' : ''}
-                ${theme === 'thanksgiving' ? 'text-amber-600/40' : ''}
-              `} />
+              <div className={`rounded-full p-3 
+                ${theme === 'christmas' ? 'bg-red-600/10' : ''}
+                ${theme === 'halloween' ? 'bg-orange-600/10' : ''}
+                ${theme === 'thanksgiving' ? 'bg-amber-600/10' : ''}
+                ${theme === 'default' ? 'bg-primary/10' : ''}
+              `}>
+                <Key className={`h-14 w-14
+                  ${theme === 'christmas' ? 'text-red-500/70' : ''}
+                  ${theme === 'halloween' ? 'text-orange-500/70' : ''}
+                  ${theme === 'thanksgiving' ? 'text-amber-500/70' : ''}
+                  ${theme === 'default' ? 'text-primary/60' : ''}
+                `} />
+              </div>
             </div>
             
             <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between pt-4">
@@ -231,9 +256,10 @@ export default function Header() {
                 variant="outline" 
                 onClick={() => setIsAuthModalOpen(false)}
                 className={`
-                  ${theme === 'christmas' ? 'border-red-600/30 hover:bg-red-950/20' : ''}
-                  ${theme === 'halloween' ? 'border-orange-600/30 hover:bg-orange-950/20' : ''}
-                  ${theme === 'thanksgiving' ? 'border-amber-600/30 hover:bg-amber-950/20' : ''}
+                  ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-950/30 text-foreground' : ''}
+                  ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-950/30 text-foreground' : ''}
+                  ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-950/30 text-foreground' : ''}
+                  ${theme === 'default' ? 'border-border/80 hover:bg-accent text-foreground' : ''}
                 `}
               >
                 Cancel
@@ -241,9 +267,10 @@ export default function Header() {
               <Button 
                 type="submit"
                 className={`
-                  ${theme === 'christmas' ? 'bg-red-600 hover:bg-red-700' : ''}
-                  ${theme === 'halloween' ? 'bg-orange-600 hover:bg-orange-700' : ''}
-                  ${theme === 'thanksgiving' ? 'bg-amber-600 hover:bg-amber-700' : ''}
+                  ${theme === 'christmas' ? 'bg-red-600 hover:bg-red-700 text-white' : ''}
+                  ${theme === 'halloween' ? 'bg-orange-600 hover:bg-orange-700 text-white' : ''}
+                  ${theme === 'thanksgiving' ? 'bg-amber-600 hover:bg-amber-700 text-white' : ''}
+                  ${theme === 'default' ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}
                 `}
               >
                 <Lock className="mr-2 h-4 w-4" /> Authenticate

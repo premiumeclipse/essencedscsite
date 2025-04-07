@@ -132,16 +132,21 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`sm:max-w-md
-        ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/30 to-green-950/30' : ''}
-        ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/30 to-purple-950/30' : ''}
-        ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/30 to-orange-950/30' : ''}
+      <DialogContent className={`sm:max-w-md relative overflow-hidden
+        ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
+        ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
+        ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
       `}>
-        <DialogHeader>
+        {/* Background Pattern based on theme */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none z-0" 
+             style={{ backgroundImage: 'var(--theme-bg-pattern)' }}></div>
+        
+        <DialogHeader className="relative z-10">
           <DialogTitle className={`text-xl font-bold flex items-center gap-2
             ${theme === 'christmas' ? 'text-red-500' : ''}
             ${theme === 'halloween' ? 'text-orange-500' : ''}
             ${theme === 'thanksgiving' ? 'text-amber-500' : ''}
+            ${theme === 'default' ? 'text-primary' : ''}
           `}>
             <Settings className="h-5 w-5" />
             Developer Portal
@@ -154,14 +159,37 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
         {isAuthenticated ? (
           <>
             <Tabs defaultValue="themes" value={selectedTab} onValueChange={setSelectedTab}>
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="themes">
+              <TabsList className={`grid w-full grid-cols-3 bg-transparent border 
+              ${theme === 'christmas' ? 'border-red-600/30 [&>*[data-state=active]]:bg-red-600/20 [&>*[data-state=active]]:text-red-600' : ''}
+              ${theme === 'halloween' ? 'border-orange-600/30 [&>*[data-state=active]]:bg-orange-600/20 [&>*[data-state=active]]:text-orange-600' : ''}
+              ${theme === 'thanksgiving' ? 'border-amber-600/30 [&>*[data-state=active]]:bg-amber-600/20 [&>*[data-state=active]]:text-amber-600' : ''}
+              ${theme === 'default' ? 'border-border [&>*[data-state=active]]:bg-accent [&>*[data-state=active]]:text-accent-foreground' : ''}
+            `}>
+                <TabsTrigger value="themes" className={`
+                  data-[state=active]:shadow-none
+                  ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
+                  ${theme === 'halloween' ? 'hover:bg-orange-600/10 hover:text-orange-500' : ''}
+                  ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
+                  ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
+                `}>
                   <div className="flex items-center gap-1">
-                    <span className={theme === 'christmas' ? 'text-red-500' : theme === 'halloween' ? 'text-orange-500' : theme === 'thanksgiving' ? 'text-amber-500' : ''}>Themes</span>
+                    <span>Themes</span>
                   </div>
                 </TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
-                <TabsTrigger value="about">About</TabsTrigger>
+                <TabsTrigger value="settings" className={`
+                  data-[state=active]:shadow-none
+                  ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
+                  ${theme === 'halloween' ? 'hover:bg-orange-600/10 hover:text-orange-500' : ''}
+                  ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
+                  ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
+                `}>Settings</TabsTrigger>
+                <TabsTrigger value="about" className={`
+                  data-[state=active]:shadow-none
+                  ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
+                  ${theme === 'halloween' ? 'hover:bg-orange-600/10 hover:text-orange-500' : ''}
+                  ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
+                  ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
+                `}>About</TabsTrigger>
               </TabsList>
 
               <TabsContent value="themes" className="py-4">
@@ -256,6 +284,12 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                 variant="outline"
                 onClick={handleLogout}
                 size="sm"
+                className={`
+                  ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-950/30 text-foreground' : ''}
+                  ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-950/30 text-foreground' : ''}
+                  ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-950/30 text-foreground' : ''}
+                  ${theme === 'default' ? 'border-border/80 hover:bg-accent text-foreground' : ''}
+                `}
               >
                 <Lock className="mr-2 h-4 w-4" /> Logout
               </Button>
@@ -263,6 +297,11 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                 type="button"
                 variant="secondary"
                 onClick={() => onOpenChange(false)}
+                className={`
+                  ${theme === 'christmas' ? 'bg-red-600/20 hover:bg-red-600/30 text-red-700' : ''}
+                  ${theme === 'halloween' ? 'bg-orange-600/20 hover:bg-orange-600/30 text-orange-700' : ''}
+                  ${theme === 'thanksgiving' ? 'bg-amber-600/20 hover:bg-amber-600/30 text-amber-700' : ''}
+                `}
               >
                 Close
               </Button>
@@ -272,9 +311,13 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
           <>
             {isLoggingIn ? (
               <div className="py-6">
-                <form onSubmit={handleLoginSubmit} className="space-y-4">
+                <form onSubmit={handleLoginSubmit} className="space-y-4 relative z-10">
                   <div className="space-y-2">
-                    <Label htmlFor="password">Developer Password</Label>
+                    <Label htmlFor="password" className={`
+                      ${theme === 'christmas' ? 'text-red-200' : ''}
+                      ${theme === 'halloween' ? 'text-orange-200' : ''}
+                      ${theme === 'thanksgiving' ? 'text-amber-200' : ''}
+                    `}>Developer Password</Label>
                     <Input
                       id="password"
                       type="password"
@@ -282,13 +325,34 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter developer password"
                       autoComplete="off"
+                      className={`
+                        ${theme === 'christmas' ? 'border-red-600/40 focus-visible:ring-red-500 bg-background/60' : ''}
+                        ${theme === 'halloween' ? 'border-orange-600/40 focus-visible:ring-orange-500 bg-background/60' : ''}
+                        ${theme === 'thanksgiving' ? 'border-amber-600/40 focus-visible:ring-amber-500 bg-background/60' : ''}
+                        ${theme === 'default' ? 'border-border/80 bg-background/60' : ''}
+                      `}
                     />
                   </div>
-                  <div className="flex justify-center">
-                    <Lock className="text-muted-foreground h-16 w-16 mb-2" />
+                  <div className="flex justify-center py-4">
+                    <div className={`rounded-full p-3 
+                      ${theme === 'christmas' ? 'bg-red-600/10' : ''}
+                      ${theme === 'halloween' ? 'bg-orange-600/10' : ''}
+                      ${theme === 'thanksgiving' ? 'bg-amber-600/10' : ''}
+                      ${theme === 'default' ? 'bg-primary/10' : ''}
+                    `}>
+                      <Lock className={`h-14 w-14
+                        ${theme === 'christmas' ? 'text-red-500/70' : ''}
+                        ${theme === 'halloween' ? 'text-orange-500/70' : ''}
+                        ${theme === 'thanksgiving' ? 'text-amber-500/70' : ''}
+                        ${theme === 'default' ? 'text-primary/60' : ''}
+                      `} />
+                    </div>
                   </div>
                   <p className="text-xs text-muted-foreground text-center">
                     Enter the developer password to access additional settings and options.
+                    <span className="block mt-1 opacity-70">
+                      This area is restricted to authorized personnel only.
+                    </span>
                   </p>
                   
                   <div className="flex justify-between pt-4">
@@ -296,10 +360,24 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                       type="button" 
                       variant="outline"
                       onClick={() => setIsLoggingIn(false)}
+                      className={`
+                        ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-950/30 text-foreground' : ''}
+                        ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-950/30 text-foreground' : ''}
+                        ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-950/30 text-foreground' : ''}
+                        ${theme === 'default' ? 'border-border/80 hover:bg-accent text-foreground' : ''}
+                      `}
                     >
                       <X className="mr-2 h-4 w-4" /> Cancel
                     </Button>
-                    <Button type="submit">
+                    <Button 
+                      type="submit"
+                      className={`
+                        ${theme === 'christmas' ? 'bg-red-600 hover:bg-red-700 text-white' : ''}
+                        ${theme === 'halloween' ? 'bg-orange-600 hover:bg-orange-700 text-white' : ''}
+                        ${theme === 'thanksgiving' ? 'bg-amber-600 hover:bg-amber-700 text-white' : ''}
+                        ${theme === 'default' ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}
+                      `}
+                    >
                       <Lock className="mr-2 h-4 w-4" /> Authenticate
                     </Button>
                   </div>
@@ -308,14 +386,37 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
             ) : (
               <>
                 <Tabs defaultValue="themes" value={selectedTab} onValueChange={setSelectedTab}>
-                  <TabsList className={`grid w-full ${isAuthenticated ? 'grid-cols-3' : 'grid-cols-2'}`}>
-                    <TabsTrigger value="themes">
+                  <TabsList className={`grid w-full ${isAuthenticated ? 'grid-cols-3' : 'grid-cols-2'} bg-transparent border 
+                  ${theme === 'christmas' ? 'border-red-600/30 [&>*[data-state=active]]:bg-red-600/20 [&>*[data-state=active]]:text-red-600' : ''}
+                  ${theme === 'halloween' ? 'border-orange-600/30 [&>*[data-state=active]]:bg-orange-600/20 [&>*[data-state=active]]:text-orange-600' : ''}
+                  ${theme === 'thanksgiving' ? 'border-amber-600/30 [&>*[data-state=active]]:bg-amber-600/20 [&>*[data-state=active]]:text-amber-600' : ''}
+                  ${theme === 'default' ? 'border-border [&>*[data-state=active]]:bg-accent [&>*[data-state=active]]:text-accent-foreground' : ''}
+                `}>
+                    <TabsTrigger value="themes" className={`
+                      data-[state=active]:shadow-none
+                      ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
+                      ${theme === 'halloween' ? 'hover:bg-orange-600/10 hover:text-orange-500' : ''}
+                      ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
+                      ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
+                    `}>
                       <div className="flex items-center gap-1">
-                        <span className={theme === 'christmas' ? 'text-red-500' : theme === 'halloween' ? 'text-orange-500' : theme === 'thanksgiving' ? 'text-amber-500' : ''}>Themes</span>
+                        <span>Themes</span>
                       </div>
                     </TabsTrigger>
-                    {isAuthenticated && <TabsTrigger value="settings">Settings</TabsTrigger>}
-                    <TabsTrigger value="about">About</TabsTrigger>
+                    {isAuthenticated && <TabsTrigger value="settings" className={`
+                      data-[state=active]:shadow-none
+                      ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
+                      ${theme === 'halloween' ? 'hover:bg-orange-600/10 hover:text-orange-500' : ''}
+                      ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
+                      ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
+                    `}>Settings</TabsTrigger>}
+                    <TabsTrigger value="about" className={`
+                      data-[state=active]:shadow-none
+                      ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
+                      ${theme === 'halloween' ? 'hover:bg-orange-600/10 hover:text-orange-500' : ''}
+                      ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
+                      ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
+                    `}>About</TabsTrigger>
                   </TabsList>
 
                   <TabsContent value="themes" className="py-4">
@@ -373,8 +474,17 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                           variant="outline" 
                           size="sm"
                           onClick={() => setIsLoggingIn(true)}
+                          className={`
+                            ${theme === 'christmas' ? 'border-red-600/40 hover:bg-red-600/20 text-red-600 hover:text-red-700' : ''}
+                            ${theme === 'halloween' ? 'border-orange-600/40 hover:bg-orange-600/20 text-orange-600 hover:text-orange-700' : ''}
+                            ${theme === 'thanksgiving' ? 'border-amber-600/40 hover:bg-amber-600/20 text-amber-600 hover:text-amber-700' : ''}
+                          `}
                         >
-                          <Lock className="mr-2 h-4 w-4" /> Developer Login
+                          <Lock className={`mr-2 h-4 w-4
+                            ${theme === 'christmas' ? 'text-red-500' : ''}
+                            ${theme === 'halloween' ? 'text-orange-500' : ''}
+                            ${theme === 'thanksgiving' ? 'text-amber-500' : ''}
+                          `} /> Developer Login
                         </Button>
                       </div>
                     </div>
@@ -400,6 +510,11 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                     type="button"
                     variant="secondary"
                     onClick={() => onOpenChange(false)}
+                    className={`
+                      ${theme === 'christmas' ? 'bg-red-600/20 hover:bg-red-600/30 text-red-700' : ''}
+                      ${theme === 'halloween' ? 'bg-orange-600/20 hover:bg-orange-600/30 text-orange-700' : ''}
+                      ${theme === 'thanksgiving' ? 'bg-amber-600/20 hover:bg-amber-600/30 text-amber-700' : ''}
+                    `}
                   >
                     Close
                   </Button>

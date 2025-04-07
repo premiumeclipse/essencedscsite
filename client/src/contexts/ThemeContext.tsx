@@ -91,22 +91,70 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const root = document.documentElement;
     
     if (theme === 'christmas') {
+      // Christmas theme - Red, Green, Gold
       root.style.setProperty('--theme-primary', '#E53E3E'); // Red
       root.style.setProperty('--theme-secondary', '#276749'); // Green
       root.style.setProperty('--theme-accent', '#F6E05E'); // Gold
       root.style.setProperty('--theme-bg-pattern', 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M29.5 27.5l1-1 1 1-1 1-1-1M35 30l.5.5-.5.5-.5-.5.5-.5M25 30l.5.5-.5.5-.5-.5.5-.5M30 35l.5.5-.5.5-.5-.5.5-.5\' fill=\'%23ffffff10\' fill-opacity=\'0.08\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")');
+      
+      // Additional Christmas theme enhancements for various elements
+      root.style.setProperty('--primary', '#E53E3E'); // Button primary color
+      root.style.setProperty('--primary-foreground', '#ffffff'); // Text on primary
+      root.style.setProperty('--secondary', '#276749'); // Secondary button color
+      root.style.setProperty('--border', 'rgba(229, 62, 62, 0.2)'); // Border color with red tint
+      root.style.setProperty('--ring', 'rgba(229, 62, 62, 0.5)'); // Focus ring
+      root.style.setProperty('--accent', 'rgba(229, 62, 62, 0.1)'); // Accent background
+      root.style.setProperty('--accent-foreground', '#E53E3E'); // Accent text
+      
+      // Adjust card and dialog background with a slight theme tint
+      root.style.setProperty('--card', 'rgba(20, 20, 20, 0.95)');
+      root.style.setProperty('--card-foreground', '#ffffff');
+      root.style.setProperty('--dialog', 'rgba(20, 20, 20, 0.95)');
+      root.style.setProperty('--dialog-foreground', '#ffffff');
     } 
     else if (theme === 'halloween') {
+      // Halloween theme - Orange, Purple, Green
       root.style.setProperty('--theme-primary', '#9c4221'); // Pumpkin orange
       root.style.setProperty('--theme-secondary', '#805ad5'); // Purple
       root.style.setProperty('--theme-accent', '#68d391'); // Slime green
       root.style.setProperty('--theme-bg-pattern', 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 30l1 1-1 1-1-1 1-1M28 25l1 1-1 1-1-1 1-1M32 25l1 1-1 1-1-1 1-1M30 34l1 1-1 1-1-1 1-1\' fill=\'%239c412127\' fill-opacity=\'0.1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")');
+      
+      // Additional Halloween theme enhancements for various elements
+      root.style.setProperty('--primary', '#9c4221'); // Button primary color
+      root.style.setProperty('--primary-foreground', '#ffffff'); // Text on primary
+      root.style.setProperty('--secondary', '#805ad5'); // Secondary color
+      root.style.setProperty('--border', 'rgba(156, 66, 33, 0.2)'); // Border color with orange tint
+      root.style.setProperty('--ring', 'rgba(156, 66, 33, 0.5)'); // Focus ring
+      root.style.setProperty('--accent', 'rgba(156, 66, 33, 0.1)'); // Accent background
+      root.style.setProperty('--accent-foreground', '#9c4221'); // Accent text
+      
+      // Adjust card and dialog background with a slight theme tint
+      root.style.setProperty('--card', 'rgba(20, 20, 20, 0.95)');
+      root.style.setProperty('--card-foreground', '#ffffff');
+      root.style.setProperty('--dialog', 'rgba(20, 20, 20, 0.95)');
+      root.style.setProperty('--dialog-foreground', '#ffffff');
     } 
     else if (theme === 'thanksgiving') {
+      // Thanksgiving theme - Orange, Brown, Yellow
       root.style.setProperty('--theme-primary', '#dd6b20'); // Orange
       root.style.setProperty('--theme-secondary', '#b7791f'); // Brown
       root.style.setProperty('--theme-accent', '#ecc94b'); // Yellow
       root.style.setProperty('--theme-bg-pattern', 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 32.5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3M15 22.5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3M45 42.5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3\' fill=\'%23dd6b2020\' fill-opacity=\'0.08\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")');
+      
+      // Additional Thanksgiving theme enhancements for various elements
+      root.style.setProperty('--primary', '#dd6b20'); // Button primary color  
+      root.style.setProperty('--primary-foreground', '#ffffff'); // Text on primary
+      root.style.setProperty('--secondary', '#b7791f'); // Secondary color
+      root.style.setProperty('--border', 'rgba(221, 107, 32, 0.2)'); // Border color with orange tint
+      root.style.setProperty('--ring', 'rgba(221, 107, 32, 0.5)'); // Focus ring
+      root.style.setProperty('--accent', 'rgba(221, 107, 32, 0.1)'); // Accent background
+      root.style.setProperty('--accent-foreground', '#dd6b20'); // Accent text
+      
+      // Adjust card and dialog background with a slight theme tint
+      root.style.setProperty('--card', 'rgba(20, 20, 20, 0.95)');
+      root.style.setProperty('--card-foreground', '#ffffff');
+      root.style.setProperty('--dialog', 'rgba(20, 20, 20, 0.95)');
+      root.style.setProperty('--dialog-foreground', '#ffffff');
     } 
     else {
       // Default theme - reset to original values
@@ -114,6 +162,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.style.removeProperty('--theme-secondary');
       root.style.removeProperty('--theme-accent'); 
       root.style.removeProperty('--theme-bg-pattern');
+      
+      // Reset Tailwind CSS variables
+      root.style.removeProperty('--primary');
+      root.style.removeProperty('--primary-foreground');
+      root.style.removeProperty('--secondary');
+      root.style.removeProperty('--border');
+      root.style.removeProperty('--ring');
+      root.style.removeProperty('--accent');
+      root.style.removeProperty('--accent-foreground');
+      root.style.removeProperty('--card');
+      root.style.removeProperty('--card-foreground');
+      root.style.removeProperty('--dialog');
+      root.style.removeProperty('--dialog-foreground');
     }
   }, [theme]);
 
