@@ -26,6 +26,8 @@
     --theme-secondary: var(--background-elevated);
     --theme-accent: var(--discord-pink);
     --theme-bg-pattern: none;
+    --theme-glow-color: rgba(88, 101, 242, 0.6);
+    --theme-highlight: rgba(88, 101, 242, 0.15);
     
     /* Base shadcn variables */
     --background: var(--background-primary);
@@ -93,36 +95,91 @@
     background-image: var(--theme-bg-pattern);
     opacity: 0.05;
   }
-  
-  /* Theme styles */
-  body.theme-christmas {
-    --background-primary: 220 20% 6%;
-    --background-secondary: 220 15% 11%;
+
+  /* Christmas Theme */
+  .theme-christmas {
+    --theme-primary: 350 80% 55%; /* Christmas red */
+    --theme-secondary: 145 50% 40%; /* Christmas green */
+    --theme-accent: 145 60% 50%; /* Bright green */
+    --theme-bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20 L40 35 L30 50 L20 35 Z' stroke='%23ff0000' fill='none'/%3E%3C/svg%3E");
+    --theme-glow-color: rgba(220, 53, 69, 0.6);
+    --theme-highlight: rgba(220, 53, 69, 0.15);
+  }
+
+  /* Halloween Theme */
+  .theme-halloween {
+    --theme-primary: 25 100% 50%; /* Halloween orange */
+    --theme-secondary: 270 60% 40%; /* Halloween purple */
+    --theme-accent: 280 70% 50%; /* Bright purple */
+    --theme-bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 15 L45 15 L38 25 L42 35 L30 28 L18 35 L22 25 L15 15 L25 15 Z' stroke='%23ff8800' fill='none'/%3E%3C/svg%3E");
+    --theme-glow-color: rgba(255, 136, 0, 0.6);
+    --theme-highlight: rgba(255, 136, 0, 0.15);
+  }
+
+  /* Thanksgiving Theme */
+  .theme-thanksgiving {
+    --theme-primary: 30 90% 50%; /* Thanksgiving amber */
+    --theme-secondary: 25 70% 40%; /* Thanksgiving brown */
+    --theme-accent: 45 100% 60%; /* Golden amber */
+    --theme-bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10 C 45 10, 50 25, 50 30 C 50 45, 30 50, 30 50 C 30 50, 10 45, 10 30 C 10 25, 15 10, 30 10 Z' stroke='%23d97706' fill='none'/%3E%3C/svg%3E");
+    --theme-glow-color: rgba(217, 119, 6, 0.6);
+    --theme-highlight: rgba(217, 119, 6, 0.15);
+  }
+
+  /* Themed content areas */
+  .christmas-content a:not(.no-theme) {
+    @apply text-red-500 hover:text-red-400 transition-colors;
   }
   
-  body.theme-halloween {
-    --background-primary: 270 20% 6%;
-    --background-secondary: 270 15% 10%;
+  .halloween-content a:not(.no-theme) {
+    @apply text-orange-500 hover:text-orange-400 transition-colors;
   }
   
-  body.theme-thanksgiving {
-    --background-primary: 30 20% 8%;
-    --background-secondary: 30 15% 12%;
+  .thanksgiving-content a:not(.no-theme) {
+    @apply text-amber-500 hover:text-amber-400 transition-colors;
+  }
+
+  /* Theme-specific buttons */
+  .theme-christmas button:not(.no-theme) {
+    @apply hover:shadow-[0_0_10px_var(--theme-glow-color)];
+  }
+  
+  .theme-halloween button:not(.no-theme) {
+    @apply hover:shadow-[0_0_10px_var(--theme-glow-color)];
+  }
+  
+  .theme-thanksgiving button:not(.no-theme) {
+    @apply hover:shadow-[0_0_10px_var(--theme-glow-color)];
   }
 }
 
 /* Custom utilities */
 @layer utilities {
+  /* Base gradient text styles */
   .gradient-text {
     @apply bg-gradient-to-r from-[#5865F2] to-[#EB459E] bg-clip-text text-transparent;
   }
   
+  /* Theme-specific gradient texts */
+  .theme-christmas .gradient-text {
+    @apply bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent;
+  }
+  
+  .theme-halloween .gradient-text {
+    @apply bg-gradient-to-r from-orange-500 to-purple-700 bg-clip-text text-transparent;
+  }
+  
+  .theme-thanksgiving .gradient-text {
+    @apply bg-gradient-to-r from-amber-500 to-amber-800 bg-clip-text text-transparent;
+  }
+  
+  /* Glow effects */
   .button-glow {
     @apply transition-all duration-300;
   }
   
   .button-glow:hover {
-    @apply shadow-[0_0_15px_rgba(88,101,242,0.6)];
+    @apply shadow-[0_0_15px_var(--theme-glow-color,rgba(88,101,242,0.6))];
   }
   
   .button-glow-pink {
@@ -133,10 +190,50 @@
     @apply shadow-[0_0_15px_rgba(235,69,158,0.6)];
   }
   
+  /* Theme-specific cards for each theme */
+  .theme-christmas .feature-card {
+    @apply border-red-600/30 bg-gradient-to-b from-transparent to-red-950/10;
+  }
+  
+  .theme-halloween .feature-card {
+    @apply border-orange-600/30 bg-gradient-to-b from-transparent to-orange-950/10;
+  }
+  
+  .theme-thanksgiving .feature-card {
+    @apply border-amber-600/30 bg-gradient-to-b from-transparent to-amber-950/10;
+  }
+  
+  /* Enhanced hover effects for themed cards */
+  .theme-christmas .feature-card:hover {
+    @apply border-red-500 shadow-lg shadow-red-700/20;
+  }
+  
+  .theme-halloween .feature-card:hover {
+    @apply border-orange-500 shadow-lg shadow-orange-700/20;
+  }
+  
+  .theme-thanksgiving .feature-card:hover {
+    @apply border-amber-500 shadow-lg shadow-amber-700/20;
+  }
+  
+  /* Blur background with theme-specific tinting */
   .blur-bg {
     @apply backdrop-blur-md bg-opacity-80;
   }
   
+  .theme-christmas .blur-bg {
+    @apply bg-red-950/10 backdrop-blur-md;
+  }
+  
+  .theme-halloween .blur-bg {
+    @apply bg-orange-950/10 backdrop-blur-md;
+  }
+  
+  .theme-thanksgiving .blur-bg {
+    @apply bg-amber-950/10 backdrop-blur-md;
+  }
+  
+  /* Card animations */
   .feature-card {
     @apply transition-all duration-300;
   }
@@ -145,11 +242,38 @@
     @apply -translate-y-1 shadow-lg shadow-primary/20;
   }
   
+  /* Command item styling */
   .command-item {
     @apply transition-all duration-200;
   }
   
   .command-item:hover {
     @apply bg-secondary/50;
+  }
+  
+  /* Theme-specific command items */
+  .theme-christmas .command-item:hover {
+    @apply bg-red-950/20;
+  }
+  
+  .theme-halloween .command-item:hover {
+    @apply bg-orange-950/20;
+  }
+  
+  .theme-thanksgiving .command-item:hover {
+    @apply bg-amber-950/20;
+  }
+  
+  /* Theme-specific highlights */
+  .theme-christmas .theme-highlight {
+    @apply bg-red-500/10 border-red-500/30;
+  }
+  
+  .theme-halloween .theme-highlight {
+    @apply bg-orange-500/10 border-orange-500/30;
+  }
+  
+  .theme-thanksgiving .theme-highlight {
+    @apply bg-amber-500/10 border-amber-500/30;
   }
 }

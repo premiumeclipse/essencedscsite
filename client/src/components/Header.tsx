@@ -88,12 +88,28 @@ export default function Header() {
   };
   
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 blur-bg bg-background/80 border-b border-muted/40">
+    <header className={`fixed top-0 left-0 right-0 z-50 blur-bg bg-background/80 border-b transition-all duration-300
+      ${theme === 'christmas' ? 'border-red-700/30 shadow-lg shadow-red-900/20' : ''}
+      ${theme === 'halloween' ? 'border-orange-700/30 shadow-lg shadow-orange-900/20' : ''}
+      ${theme === 'thanksgiving' ? 'border-amber-700/30 shadow-lg shadow-amber-900/20' : ''}
+      ${theme === 'default' ? 'border-muted/40' : ''}
+    `}>
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold text-foreground">Essence</span>
+          <Link href="/" className="flex items-center space-x-2 relative group">
+            <span className={`text-xl font-bold transition-all duration-300
+              ${theme === 'christmas' ? 'text-red-500 group-hover:text-red-400' : ''}
+              ${theme === 'halloween' ? 'text-orange-500 group-hover:text-orange-400' : ''}
+              ${theme === 'thanksgiving' ? 'text-amber-500 group-hover:text-amber-400' : ''}
+              ${theme === 'default' ? 'text-foreground group-hover:text-primary' : ''}
+            `}>Essence</span>
+            <span className={`absolute -bottom-2 left-0 right-0 h-[2px] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left
+              ${theme === 'christmas' ? 'bg-red-500' : ''}
+              ${theme === 'halloween' ? 'bg-orange-500' : ''}
+              ${theme === 'thanksgiving' ? 'bg-amber-500' : ''}
+              ${theme === 'default' ? 'bg-primary' : ''}
+            `}></span>
           </Link>
           
           {/* Desktop Navigation */}
@@ -102,27 +118,60 @@ export default function Header() {
               <Link 
                 key={item.name}
                 href={item.href}
-                className={`${
+                className={`relative group ${
                   isActive(item.href) 
-                    ? "text-foreground" 
-                    : "text-muted-foreground hover:text-foreground"
+                    ? `font-medium ${
+                        theme === 'christmas' ? 'text-red-500' : 
+                        theme === 'halloween' ? 'text-orange-500' : 
+                        theme === 'thanksgiving' ? 'text-amber-500' : 
+                        'text-foreground'
+                      }`
+                    : `text-muted-foreground hover:${
+                        theme === 'christmas' ? 'text-red-400' : 
+                        theme === 'halloween' ? 'text-orange-400' : 
+                        theme === 'thanksgiving' ? 'text-amber-400' : 
+                        'text-foreground'
+                      }`
                 } transition-colors`}
               >
                 {item.name}
+                <span className={`absolute -bottom-2 left-0 right-0 h-[2px] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left
+                  ${theme === 'christmas' ? 'bg-red-500' : ''}
+                  ${theme === 'halloween' ? 'bg-orange-500' : ''}
+                  ${theme === 'thanksgiving' ? 'bg-amber-500' : ''}
+                  ${theme === 'default' ? 'bg-primary' : ''}
+                `}></span>
               </Link>
             ))}
             <Button 
               variant="ghost" 
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={`relative group transition-all duration-300
+                ${theme === 'christmas' ? 'text-muted-foreground hover:text-red-400 hover:bg-red-500/10' : ''}
+                ${theme === 'halloween' ? 'text-muted-foreground hover:text-orange-400 hover:bg-orange-500/10' : ''}
+                ${theme === 'thanksgiving' ? 'text-muted-foreground hover:text-amber-400 hover:bg-amber-500/10' : ''}
+                ${theme === 'default' ? 'text-muted-foreground hover:text-foreground hover:bg-accent' : ''}
+              `}
               onClick={openDevPortal}
             >
+              <Settings className={`mr-2 h-4 w-4 transition-transform group-hover:rotate-45 ${
+                theme === 'christmas' ? 'group-hover:text-red-400' : 
+                theme === 'halloween' ? 'group-hover:text-orange-400' : 
+                theme === 'thanksgiving' ? 'group-hover:text-amber-400' : 
+                ''
+              }`} />
               DevAccess
             </Button>
           </nav>
           
           {/* CTA Button */}
           <div className="flex items-center space-x-4">
-            <Button asChild className="hidden md:flex button-glow">
+            <Button 
+              asChild 
+              className={`hidden md:flex button-glow transition-all duration-300
+                ${theme === 'christmas' ? 'bg-red-600 hover:bg-red-700 border-red-500 text-white' : ''}
+                ${theme === 'halloween' ? 'bg-orange-600 hover:bg-orange-700 border-orange-500 text-white' : ''}
+                ${theme === 'thanksgiving' ? 'bg-amber-600 hover:bg-amber-700 border-amber-500 text-white' : ''}
+              `}>
               <a href="https://discord.com/oauth2/authorize" target="_blank" rel="noopener noreferrer">
                 Add to Discord
               </a>
@@ -132,7 +181,11 @@ export default function Header() {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="md:hidden"
+              className={`md:hidden
+                ${theme === 'christmas' ? 'hover:bg-red-500/10 text-red-50' : ''}
+                ${theme === 'halloween' ? 'hover:bg-orange-500/10 text-orange-50' : ''}
+                ${theme === 'thanksgiving' ? 'hover:bg-amber-500/10 text-amber-50' : ''}
+              `}
               onClick={toggleMobileMenu}
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -143,7 +196,12 @@ export default function Header() {
       
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-secondary border-t border-muted/40">
+        <div className={`md:hidden border-t transition-all ease-in-out duration-300
+          ${theme === 'christmas' ? 'bg-gradient-to-b from-background to-red-950/20 border-red-800/20' : ''}
+          ${theme === 'halloween' ? 'bg-gradient-to-b from-background to-orange-950/20 border-orange-800/20' : ''}
+          ${theme === 'thanksgiving' ? 'bg-gradient-to-b from-background to-amber-950/20 border-amber-800/20' : ''}
+          ${theme === 'default' ? 'bg-secondary border-muted/40' : ''}
+        `}>
           <div className="container mx-auto px-4 py-3">
             <nav className="flex flex-col space-y-3">
               {navItems.map((item) => (
@@ -152,9 +210,24 @@ export default function Header() {
                   href={item.href}
                   className={`${
                     isActive(item.href) 
-                      ? "text-foreground" 
-                      : "text-muted-foreground hover:text-foreground"
-                  } transition-colors py-2`}
+                      ? `font-medium ${
+                          theme === 'christmas' ? 'text-red-500' : 
+                          theme === 'halloween' ? 'text-orange-500' : 
+                          theme === 'thanksgiving' ? 'text-amber-500' : 
+                          'text-foreground'
+                        }`
+                      : `text-muted-foreground hover:${
+                          theme === 'christmas' ? 'text-red-400' : 
+                          theme === 'halloween' ? 'text-orange-400' : 
+                          theme === 'thanksgiving' ? 'text-amber-400' : 
+                          'text-foreground'
+                        }`
+                  } transition-colors py-2 pl-2 rounded-md 
+                  ${theme === 'christmas' ? 'hover:bg-red-950/30' : ''}
+                  ${theme === 'halloween' ? 'hover:bg-orange-950/30' : ''}
+                  ${theme === 'thanksgiving' ? 'hover:bg-amber-950/30' : ''}
+                  ${theme === 'default' ? 'hover:bg-accent/50' : ''}
+                  `}
                   onClick={closeMobileMenu}
                 >
                   {item.name}
@@ -162,14 +235,31 @@ export default function Header() {
               ))}
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-muted-foreground hover:text-foreground transition-colors py-2"
+                className={`w-full justify-start pl-2 transition-colors rounded-md
+                  ${theme === 'christmas' ? 'text-muted-foreground hover:text-red-500 hover:bg-red-950/30' : ''}
+                  ${theme === 'halloween' ? 'text-muted-foreground hover:text-orange-500 hover:bg-orange-950/30' : ''}
+                  ${theme === 'thanksgiving' ? 'text-muted-foreground hover:text-amber-500 hover:bg-amber-950/30' : ''}
+                  ${theme === 'default' ? 'text-muted-foreground hover:text-foreground hover:bg-accent/50' : ''}
+                `}
                 onClick={openDevPortal}
               >
-                <Settings className="mr-2 h-4 w-4" />
+                <Settings className={`mr-2 h-4 w-4 ${
+                  theme === 'christmas' ? 'group-hover:text-red-400' : 
+                  theme === 'halloween' ? 'group-hover:text-orange-400' : 
+                  theme === 'thanksgiving' ? 'group-hover:text-amber-400' : 
+                  ''
+                }`} />
                 DevAccess
               </Button>
               
-              <Button asChild className="w-full mt-2 button-glow">
+              <Button 
+                asChild 
+                className={`w-full mt-2 button-glow transition-all duration-300
+                  ${theme === 'christmas' ? 'bg-red-600 hover:bg-red-700 border-red-500 text-white' : ''}
+                  ${theme === 'halloween' ? 'bg-orange-600 hover:bg-orange-700 border-orange-500 text-white' : ''}
+                  ${theme === 'thanksgiving' ? 'bg-amber-600 hover:bg-amber-700 border-amber-500 text-white' : ''}
+                  ${theme === 'default' ? '' : ''}
+                `}>
                 <a 
                   href="https://discord.com/oauth2/authorize" 
                   target="_blank" 
