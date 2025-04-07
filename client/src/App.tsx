@@ -7,6 +7,7 @@ import HomePage from "@/pages/HomePage";
 import CommandsPage from "@/pages/CommandsPage";
 import SupportPage from "@/pages/SupportPage";
 import MainLayout from "@/layouts/MainLayout";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 function Router() {
   return (
@@ -22,10 +23,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <MainLayout>
-        <Router />
-      </MainLayout>
-      <Toaster />
+      <ThemeProvider>
+        <MainLayout>
+          <Router />
+        </MainLayout>
+        <Toaster />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -62,7 +62,7 @@ export default function SupportSection() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Support & Resources</h2>
-          <p className="text-muted-foreground">Get help with HarmonyBot and join our community.</p>
+          <p className="text-muted-foreground">Get help with Essence and join our community.</p>
         </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -79,7 +79,7 @@ export default function SupportSection() {
             <h3 className="text-2xl font-bold mb-2">Join Our Community</h3>
             <p className="text-muted-foreground mb-6">Get help from our team and other users, share your feedback, and stay updated on new features.</p>
             <Button asChild className="button-glow">
-              <a href="https://discord.gg/harmonybot" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.gg/essence" target="_blank" rel="noopener noreferrer">
                 Join Support Server
               </a>
             </Button>
@@ -96,7 +96,7 @@ export default function SupportSection() {
               <Book className="text-4xl text-accent" />
             </div>
             <h3 className="text-2xl font-bold mb-2">Documentation</h3>
-            <p className="text-muted-foreground mb-6">Explore our detailed guides, tutorials, and API documentation to get the most out of HarmonyBot.</p>
+            <p className="text-muted-foreground mb-6">Explore our detailed guides, tutorials, and API documentation to get the most out of Essence.</p>
             <Button asChild className="bg-accent hover:bg-accent/90 button-glow-pink">
               <a href="#" target="_blank" rel="noopener noreferrer">
                 View Documentation

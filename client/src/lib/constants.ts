@@ -2,10 +2,10 @@
 
 // Social media links
 export const SOCIAL_LINKS = {
-  DISCORD: "https://discord.gg/harmonybot",
-  TWITTER: "https://twitter.com/harmonybot",
-  GITHUB: "https://github.com/harmonybot",
-  PATREON: "https://patreon.com/harmonybot"
+  DISCORD: "https://discord.gg/essence",
+  TWITTER: "https://twitter.com/essencebot",
+  GITHUB: "https://github.com/essencebot",
+  PATREON: "https://patreon.com/essencebot"
 };
 
 // Bot invite URL

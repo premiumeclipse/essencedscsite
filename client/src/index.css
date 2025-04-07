@@ -21,6 +21,12 @@
     --text-secondary: 220 5% 65%;
     --text-muted: 220 5% 45%;
     
+    /* Seasonal theme variables */
+    --theme-primary: var(--discord-blurple);
+    --theme-secondary: var(--background-elevated);
+    --theme-accent: var(--discord-pink);
+    --theme-bg-pattern: none;
+    
     /* Base shadcn variables */
     --background: var(--background-primary);
     --foreground: var(--text-primary);
@@ -31,16 +37,16 @@
     --popover: var(--background-secondary);
     --popover-foreground: var(--text-primary);
     
-    --primary: var(--discord-blurple);
+    --primary: var(--theme-primary);
     --primary-foreground: var(--text-primary);
     
-    --secondary: var(--background-elevated);
+    --secondary: var(--theme-secondary);
     --secondary-foreground: var(--text-primary);
     
     --muted: var(--background-elevated);
     --muted-foreground: var(--text-secondary);
     
-    --accent: var(--discord-pink);
+    --accent: var(--theme-accent);
     --accent-foreground: var(--text-primary);
     
     --destructive: var(--discord-red);
@@ -48,13 +54,13 @@
     
     --border: var(--background-elevated);
     --input: var(--background-elevated);
-    --ring: var(--discord-blurple);
+    --ring: var(--theme-primary);
     
     --radius: 0.5rem;
     
     /* Chart colors */
-    --chart-1: var(--discord-blurple);
-    --chart-2: var(--discord-pink);
+    --chart-1: var(--theme-primary);
+    --chart-2: var(--theme-accent);
     --chart-3: var(--discord-green);
     --chart-4: var(--discord-yellow);
     --chart-5: var(--discord-red);
@@ -71,6 +77,37 @@
   body {
     font-family: 'Inter', sans-serif;
     @apply bg-background text-foreground;
+    position: relative;
+  }
+  
+  /* Add seasonal background patterns */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    background-image: var(--theme-bg-pattern);
+    opacity: 0.05;
+  }
+  
+  /* Theme styles */
+  body.theme-christmas {
+    --background-primary: 220 20% 6%;
+    --background-secondary: 220 15% 11%;
+  }
+  
+  body.theme-halloween {
+    --background-primary: 270 20% 6%;
+    --background-secondary: 270 15% 10%;
+  }
+  
+  body.theme-thanksgiving {
+    --background-primary: 30 20% 8%;
+    --background-secondary: 30 15% 12%;
   }
 }
 

@@ -3,15 +3,16 @@ import { Button } from "@/components/ui/button";
 import { FaDiscord } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
+import type { Statistic } from "@shared/schema";
 
 export default function HeroSection() {
-  const { data: statistics } = useQuery({
+  const { data: statistics } = useQuery<Statistic>({
     queryKey: ['/api/statistics'],
     staleTime: 60 * 1000, // 1 minute
   });
   
   // Server count with animation
-  const formattedServerCount = statistics 
+  const formattedServerCount = statistics?.servers 
     ? Math.floor(statistics.servers / 1000) * 1000 + "+" 
     : "25,000+";
   
@@ -29,7 +30,7 @@ export default function HeroSection() {
               Take your Discord server to the <span className="gradient-text">next level</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-8 max-w-xl">
-              HarmonyBot enhances your Discord community with powerful moderation, music, games, and utility commands. All in one sleek, modern package.
+              Essence enhances your Discord community with powerful moderation, music, games, and utility commands. All in one sleek, modern package.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button size="lg" asChild className="button-glow">
@@ -81,11 +82,8 @@ export default function HeroSection() {
               >
                 <div className="bg-muted rounded-lg p-2">
                   <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-white font-bold text-xs">
-                      HB
-                    </div>
                     <div className="ml-3">
-                      <div className="text-sm font-semibold">HarmonyBot</div>
+                      <div className="text-sm font-semibold">Essence</div>
                       <div className="text-xs text-muted-foreground">BOT</div>
                     </div>
                     <div className="ml-auto px-2 py-1 bg-[#57F287]/20 text-[#57F287] text-xs rounded-full">
@@ -103,7 +101,7 @@ export default function HeroSection() {
                     
                     <div className="flex items-start">
                       <div className="ml-11 bg-primary/10 px-3 py-3 rounded-lg rounded-tl-none w-full">
-                        <div className="text-xs text-primary font-medium mb-2">HARMONYBOT</div>
+                        <div className="text-xs text-primary font-medium mb-2">ESSENCE</div>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
                             <span className="text-sm">🔧 Moderation</span>
@@ -130,7 +128,7 @@ export default function HeroSection() {
                     
                     <div className="flex items-start">
                       <div className="ml-11 bg-primary/10 px-3 py-3 rounded-lg rounded-tl-none">
-                        <div className="text-xs text-primary font-medium mb-2">HARMONYBOT</div>
+                        <div className="text-xs text-primary font-medium mb-2">ESSENCE</div>
                         <p className="text-sm">🎵 Now playing: Lofi Beats to Study/Relax to</p>
                         <div className="mt-2 bg-background rounded-md h-2 w-full overflow-hidden">
                           <div className="bg-primary h-full w-1/3"></div>
