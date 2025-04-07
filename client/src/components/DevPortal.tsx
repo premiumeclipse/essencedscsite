@@ -6,6 +6,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -312,10 +313,28 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
         ) : (
           <>
             {isLoggingIn ? (
-              <div className="py-6">
-                <form onSubmit={handleLoginSubmit} className="space-y-4 relative z-10">
-                  <div className="space-y-2">
+              <div className="py-6 flex flex-col items-center">
+                {/* Close Button */}
+                <div className="absolute right-4 top-4">
+                  <DialogClose asChild>
+                    <button 
+                      className={`rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none
+                        ${theme === 'christmas' ? 'text-red-300 hover:text-red-100' : ''}
+                        ${theme === 'halloween' ? 'text-orange-300 hover:text-orange-100' : ''}
+                        ${theme === 'thanksgiving' ? 'text-amber-300 hover:text-amber-100' : ''}
+                      `}
+                      onClick={() => setIsLoggingIn(false)}
+                    >
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Close</span>
+                    </button>
+                  </DialogClose>
+                </div>
+                
+                <form onSubmit={handleLoginSubmit} className="space-y-4 relative z-10 w-full max-w-[280px] mx-auto">
+                  <div className="space-y-2 text-center">
                     <Label htmlFor="password" className={`
+                      block text-center
                       ${theme === 'christmas' ? 'text-red-200' : ''}
                       ${theme === 'halloween' ? 'text-orange-200' : ''}
                       ${theme === 'thanksgiving' ? 'text-amber-200' : ''}
@@ -328,6 +347,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                       placeholder="Enter developer password"
                       autoComplete="off"
                       className={`
+                        text-center
                         ${theme === 'christmas' ? 'border-red-600/40 focus-visible:ring-red-500 bg-background/60' : ''}
                         ${theme === 'halloween' ? 'border-orange-600/40 focus-visible:ring-orange-500 bg-background/60' : ''}
                         ${theme === 'thanksgiving' ? 'border-amber-600/40 focus-visible:ring-amber-500 bg-background/60' : ''}

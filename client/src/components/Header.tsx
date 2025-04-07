@@ -14,6 +14,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 
@@ -185,17 +186,33 @@ export default function Header() {
       
       {/* Auth Modal Dialog */}
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
-        <DialogContent className={`w-[95%] max-w-md mx-auto relative overflow-hidden
+        <DialogContent className={`w-[95%] max-w-md mx-auto relative overflow-hidden flex flex-col items-center
           ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
           ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
           ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
         `}>
+          {/* Close Button */}
+          <div className="absolute right-4 top-4">
+            <DialogClose asChild>
+              <button 
+                className={`rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none
+                  ${theme === 'christmas' ? 'text-red-300 hover:text-red-100' : ''}
+                  ${theme === 'halloween' ? 'text-orange-300 hover:text-orange-100' : ''}
+                  ${theme === 'thanksgiving' ? 'text-amber-300 hover:text-amber-100' : ''}
+                `}
+              >
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </button>
+            </DialogClose>
+          </div>
+          
           {/* Background Pattern based on theme */}
           <div className="absolute inset-0 opacity-10 pointer-events-none z-0" 
                style={{ backgroundImage: 'var(--theme-bg-pattern)' }}></div>
           
-          <DialogHeader className="relative z-10">
-            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+          <DialogHeader className="relative z-10 text-center w-full">
+            <DialogTitle className="text-xl font-bold flex items-center justify-center gap-2">
               <Lock className={`h-5 w-5 
                 ${theme === 'christmas' ? 'text-red-500' : ''}
                 ${theme === 'halloween' ? 'text-orange-500' : ''}
@@ -204,7 +221,7 @@ export default function Header() {
               `} />
               Developer Authentication
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-center">
               Please enter the developer password to access settings and customization options.
               <span className="block mt-1 text-xs opacity-70">
                 This area is restricted to authorized personnel only.
@@ -212,9 +229,10 @@ export default function Header() {
             </DialogDescription>
           </DialogHeader>
           
-          <form onSubmit={handleAuthentication} className="space-y-4 py-4 relative z-10">
-            <div className="space-y-2">
+          <form onSubmit={handleAuthentication} className="space-y-4 py-4 relative z-10 w-full max-w-[280px] mx-auto">
+            <div className="space-y-2 text-center">
               <Label htmlFor="dev-password" className={`
+                block text-center
                 ${theme === 'christmas' ? 'text-red-200' : ''}
                 ${theme === 'halloween' ? 'text-orange-200' : ''}
                 ${theme === 'thanksgiving' ? 'text-amber-200' : ''}
@@ -227,6 +245,7 @@ export default function Header() {
                 placeholder="Enter password"
                 autoComplete="off"
                 className={`
+                  text-center
                   ${theme === 'christmas' ? 'border-red-600/40 focus-visible:ring-red-500 bg-background/60' : ''}
                   ${theme === 'halloween' ? 'border-orange-600/40 focus-visible:ring-orange-500 bg-background/60' : ''}
                   ${theme === 'thanksgiving' ? 'border-amber-600/40 focus-visible:ring-amber-500 bg-background/60' : ''}
