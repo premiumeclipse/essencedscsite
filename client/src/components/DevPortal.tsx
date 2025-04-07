@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme, ThemeType } from "@/contexts/ThemeContext";
-import { Check, Snowflake, Skull, Leaf, Lock, X, Loader2 } from "lucide-react";
+import { Check, Snowflake, Skull, Leaf, Lock, X, Loader2, Settings } from "lucide-react";
 import { useDevAuth } from "@/contexts/DevAuthContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,11 +29,61 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { toast } = useToast();
 
-  const themeOptions: { label: string; value: ThemeType; icon: React.ReactNode }[] = [
-    { label: "Default", value: "default", icon: <Check className="h-4 w-4" /> },
-    { label: "Christmas", value: "christmas", icon: <Snowflake className="h-4 w-4" /> },
-    { label: "Halloween", value: "halloween", icon: <Skull className="h-4 w-4" /> },
-    { label: "Thanksgiving", value: "thanksgiving", icon: <Leaf className="h-4 w-4" /> },
+  const themeOptions: { 
+    label: string; 
+    value: ThemeType; 
+    icon: React.ReactNode;
+    colors: {
+      bg: string;
+      text: string;
+      hoverBg: string;
+      borderActive: string;
+    }
+  }[] = [
+    { 
+      label: "Default", 
+      value: "default", 
+      icon: <Check className="h-4 w-4" />,
+      colors: {
+        bg: "bg-secondary",
+        text: "text-foreground",
+        hoverBg: "hover:bg-accent",
+        borderActive: "border-primary",
+      }
+    },
+    { 
+      label: "Christmas", 
+      value: "christmas", 
+      icon: <Snowflake className="h-4 w-4 text-white" />,
+      colors: {
+        bg: "bg-red-600/80",
+        text: "text-white",
+        hoverBg: "hover:bg-red-700",
+        borderActive: "border-green-600",
+      }
+    },
+    { 
+      label: "Halloween", 
+      value: "halloween", 
+      icon: <Skull className="h-4 w-4 text-white" />,
+      colors: {
+        bg: "bg-orange-600/80",
+        text: "text-white",
+        hoverBg: "hover:bg-orange-700",
+        borderActive: "border-purple-600",
+      }
+    },
+    { 
+      label: "Thanksgiving", 
+      value: "thanksgiving", 
+      icon: <Leaf className="h-4 w-4 text-white" />,
+      colors: {
+        bg: "bg-amber-600/80",
+        text: "text-white",
+        hoverBg: "hover:bg-amber-700",
+        borderActive: "border-amber-300",
+      }
+    },
   ];
 
   const handleThemeChange = (newTheme: ThemeType) => {
@@ -82,9 +132,20 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className={`sm:max-w-md
+        ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/30 to-green-950/30' : ''}
+        ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/30 to-purple-950/30' : ''}
+        ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/30 to-orange-950/30' : ''}
+      `}>
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Developer Portal</DialogTitle>
+          <DialogTitle className={`text-xl font-bold flex items-center gap-2
+            ${theme === 'christmas' ? 'text-red-500' : ''}
+            ${theme === 'halloween' ? 'text-orange-500' : ''}
+            ${theme === 'thanksgiving' ? 'text-amber-500' : ''}
+          `}>
+            <Settings className="h-5 w-5" />
+            Developer Portal
+          </DialogTitle>
           <DialogDescription>
             Access development tools and customization options for Essence.
           </DialogDescription>
@@ -94,7 +155,11 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
           <>
             <Tabs defaultValue="themes" value={selectedTab} onValueChange={setSelectedTab}>
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="themes">Themes</TabsTrigger>
+                <TabsTrigger value="themes">
+                  <div className="flex items-center gap-1">
+                    <span className={theme === 'christmas' ? 'text-red-500' : theme === 'halloween' ? 'text-orange-500' : theme === 'thanksgiving' ? 'text-amber-500' : ''}>Themes</span>
+                  </div>
+                </TabsTrigger>
                 <TabsTrigger value="settings">Settings</TabsTrigger>
                 <TabsTrigger value="about">About</TabsTrigger>
               </TabsList>
@@ -111,9 +176,15 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                       <Button
                         key={option.value}
                         variant={theme === option.value ? "default" : "outline"}
-                        className={`flex items-center justify-center gap-2 ${
-                          theme === option.value ? "border-primary" : ""
-                        }`}
+                        className={`flex items-center justify-center gap-2
+                          ${theme === option.value 
+                            ? `${option.colors.borderActive} ${option.colors.bg} ${option.colors.text}`
+                            : "hover:bg-transparent"
+                          }
+                          ${option.value === 'christmas' && 'hover:bg-red-600/20 hover:text-red-500 hover:border-red-500'}
+                          ${option.value === 'halloween' && 'hover:bg-orange-600/20 hover:text-orange-500 hover:border-orange-500'}
+                          ${option.value === 'thanksgiving' && 'hover:bg-amber-600/20 hover:text-amber-500 hover:border-amber-500'}
+                        `}
                         onClick={() => handleThemeChange(option.value)}
                         disabled={isLoading}
                       >
@@ -237,9 +308,13 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
             ) : (
               <>
                 <Tabs defaultValue="themes" value={selectedTab} onValueChange={setSelectedTab}>
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="themes">Themes</TabsTrigger>
-                    <TabsTrigger value="settings">Settings</TabsTrigger>
+                  <TabsList className={`grid w-full ${isAuthenticated ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                    <TabsTrigger value="themes">
+                      <div className="flex items-center gap-1">
+                        <span className={theme === 'christmas' ? 'text-red-500' : theme === 'halloween' ? 'text-orange-500' : theme === 'thanksgiving' ? 'text-amber-500' : ''}>Themes</span>
+                      </div>
+                    </TabsTrigger>
+                    {isAuthenticated && <TabsTrigger value="settings">Settings</TabsTrigger>}
                     <TabsTrigger value="about">About</TabsTrigger>
                   </TabsList>
 
@@ -255,9 +330,15 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                           <Button
                             key={option.value}
                             variant={theme === option.value ? "default" : "outline"}
-                            className={`flex items-center justify-center gap-2 ${
-                              theme === option.value ? "border-primary" : ""
-                            }`}
+                            className={`flex items-center justify-center gap-2
+                              ${theme === option.value 
+                                ? `${option.colors.borderActive} ${option.colors.bg} ${option.colors.text}`
+                                : "hover:bg-transparent"
+                              }
+                              ${option.value === 'christmas' && 'hover:bg-red-600/20 hover:text-red-500 hover:border-red-500'}
+                              ${option.value === 'halloween' && 'hover:bg-orange-600/20 hover:text-orange-500 hover:border-orange-500'}
+                              ${option.value === 'thanksgiving' && 'hover:bg-amber-600/20 hover:text-amber-500 hover:border-amber-500'}
+                            `}
                             onClick={() => handleThemeChange(option.value)}
                             disabled={isLoading}
                           >

@@ -24,9 +24,14 @@ import {
   type GlobalTheme,
   type InsertGlobalTheme
 } from "@shared/schema";
+import session from "express-session";
+import createMemoryStore from "memorystore";
 
 // Expand the storage interface with CRUD methods
 export interface IStorage {
+  // Session store for authentication
+  sessionStore: session.Store;
+  
   // User methods (existing)
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -80,6 +85,9 @@ export class MemStorage implements IStorage {
   private testimonials: Map<number, Testimonial>;
   private globalThemes: Map<number, GlobalTheme>;
   
+  // Session store for authentication
+  sessionStore: session.Store;
+  
   currentId: number;
 
   constructor() {
@@ -92,6 +100,12 @@ export class MemStorage implements IStorage {
     this.testimonials = new Map();
     this.globalThemes = new Map();
     this.currentId = 1;
+    
+    // Initialize memory store for sessions
+    const MemoryStore = createMemoryStore(session);
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    });
     
     // Initialize with sample data
     this.initSampleData();
