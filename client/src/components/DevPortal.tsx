@@ -135,7 +135,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`w-[95%] max-w-md mx-auto relative overflow-hidden
+      <DialogContent className={`w-[95%] max-w-md mx-auto overflow-hidden z-[100]
         ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
         ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
         ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
