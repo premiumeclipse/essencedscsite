@@ -62,7 +62,7 @@ export default function SupportSection() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Support & Resources</h2>
-          <p className="text-muted-foreground">Get help with Essence and join our community.</p>
+          <p className="text-muted-foreground">Get help with essence and join our community.</p>
         </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -96,7 +96,7 @@ export default function SupportSection() {
               <Book className="text-4xl text-accent" />
             </div>
             <h3 className="text-2xl font-bold mb-2">Documentation</h3>
-            <p className="text-muted-foreground mb-6">Explore our detailed guides, tutorials, and API documentation to get the most out of Essence.</p>
+            <p className="text-muted-foreground mb-6">Explore our detailed guides, tutorials, and API documentation to get the most out of essence.</p>
             <Button asChild className="bg-accent hover:bg-accent/90 button-glow-pink">
               <a href="#" target="_blank" rel="noopener noreferrer">
                 View Documentation

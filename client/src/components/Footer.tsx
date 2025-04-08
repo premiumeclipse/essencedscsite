@@ -62,7 +62,7 @@ export default function Footer() {
                 ${theme === 'halloween' ? 'text-orange-500 group-hover:text-orange-400' : ''}
                 ${theme === 'thanksgiving' ? 'text-amber-500 group-hover:text-amber-400' : ''}
                 ${theme === 'default' ? 'text-foreground group-hover:text-primary' : ''}
-              `}>Essence</span>
+              `}>essence</span>
             </Link>
             <p className="text-muted-foreground mb-4">
               The all-in-one Discord bot to elevate your server experience.
@@ -207,7 +207,7 @@ export default function Footer() {
         </div>
         
         <div className={`mt-12 pt-8 border-t ${getThemeClasses('border')} flex flex-col md:flex-row justify-between items-center`}>
-          <p className="text-muted-foreground text-sm">© 2025 Essence Bot. All rights reserved.</p>
+          <p className="text-muted-foreground text-sm">© 2025 essence bot. All rights reserved.</p>
           <p className="text-muted-foreground text-sm mt-4 md:mt-0">
             Made with <span className={`${getThemeClasses('highlight')}`}>❤️</span> for Discord communities.
           </p>

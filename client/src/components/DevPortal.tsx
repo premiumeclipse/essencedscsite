@@ -153,7 +153,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
             Developer Portal
           </DialogTitle>
           <DialogDescription>
-            Access development tools and customization options for Essence.
+            Access development tools and customization options for essence.
           </DialogDescription>
         </DialogHeader>
 
@@ -197,7 +197,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                 <div className="space-y-4">
                   <h3 className="font-medium">Seasonal Themes</h3>
                   <p className="text-sm text-muted-foreground">
-                    Change the appearance of the Essence website with these seasonal themes.
+                    Change the appearance of the essence website with these seasonal themes.
                   </p>
                   
                   <div className="grid grid-cols-2 gap-3 mt-4">
@@ -266,14 +266,14 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
               <TabsContent value="about" className="py-4">
                 <div className="space-y-4">
-                  <h3 className="font-medium">About Essence</h3>
+                  <h3 className="font-medium">About essence</h3>
                   <p className="text-sm text-muted-foreground">
-                    Essence is a powerful Discord bot designed to enhance your server experience.
+                    essence is a powerful Discord bot designed to enhance your server experience.
                   </p>
                   
                   <div className="mt-4">
                     <p className="text-xs text-muted-foreground">Version 1.0.0</p>
-                    <p className="text-xs text-muted-foreground">© 2025 Essence Bot</p>
+                    <p className="text-xs text-muted-foreground">© 2025 essence bot</p>
                   </div>
                 </div>
               </TabsContent>
@@ -447,7 +447,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                     <div className="space-y-4">
                       <h3 className="font-medium">Seasonal Themes</h3>
                       <p className="text-sm text-muted-foreground">
-                        Change the appearance of the Essence website with these seasonal themes.
+                        Change the appearance of the essence website with these seasonal themes.
                       </p>
                       
                       <div className="grid grid-cols-2 gap-3 mt-4">
@@ -517,14 +517,14 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
                   <TabsContent value="about" className="py-4">
                     <div className="space-y-4">
-                      <h3 className="font-medium">About Essence</h3>
+                      <h3 className="font-medium">About essence</h3>
                       <p className="text-sm text-muted-foreground">
-                        Essence is a powerful Discord bot designed to enhance your server experience.
+                        essence is a powerful Discord bot designed to enhance your server experience.
                       </p>
                       
                       <div className="mt-4">
                         <p className="text-xs text-muted-foreground">Version 1.0.0</p>
-                        <p className="text-xs text-muted-foreground">© 2025 Essence Bot</p>
+                        <p className="text-xs text-muted-foreground">© 2025 essence bot</p>
                       </div>
                     </div>
                   </TabsContent>

@@ -67,7 +67,7 @@ export default function SupportPage() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Support Center</h1>
-            <p className="text-muted-foreground">Get help with Essence, find answers to common questions, and connect with our community.</p>
+            <p className="text-muted-foreground">Get help with essence, find answers to common questions, and connect with our community.</p>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
@@ -81,7 +81,7 @@ export default function SupportPage() {
                 <FaDiscord className="text-3xl text-primary" />
               </div>
               <h3 className="text-2xl font-bold mb-2">Discord Support Server</h3>
-              <p className="text-muted-foreground mb-6">Join our active community for real-time support, feature updates, and to connect with other Essence users.</p>
+              <p className="text-muted-foreground mb-6">Join our active community for real-time support, feature updates, and to connect with other essence users.</p>
               <Button asChild size="lg" className="button-glow">
                 <a href="https://discord.gg/essence" target="_blank" rel="noopener noreferrer">
                   <FaDiscord className="mr-2" /> Join Our Discord
@@ -149,12 +149,12 @@ export default function SupportPage() {
                 <h3 className="text-2xl font-bold mb-4">Setup & Security FAQ</h3>
                 <div className="space-y-1">
                   <FAQItem 
-                    question="What permissions does Essence need to function properly?"
-                    answer="Essence requires different permissions depending on the features you want to use. At minimum, it needs 'Read Messages' and 'Send Messages'. For moderation features, it requires additional permissions like 'Kick Members', 'Ban Members', and 'Manage Messages'. You can customize which permissions to grant during the bot setup process."
+                    question="What permissions does essence need to function properly?"
+                    answer="essence requires different permissions depending on the features you want to use. At minimum, it needs 'Read Messages' and 'Send Messages'. For moderation features, it requires additional permissions like 'Kick Members', 'Ban Members', and 'Manage Messages'. You can customize which permissions to grant during the bot setup process."
                   />
                   <FAQItem 
-                    question="Is it safe to give Essence administrator permissions?"
-                    answer="While Essence can function with administrator permissions, we recommend only giving it the specific permissions it needs for the features you plan to use. This follows the principle of least privilege, which is a security best practice."
+                    question="Is it safe to give essence administrator permissions?"
+                    answer="While essence can function with administrator permissions, we recommend only giving it the specific permissions it needs for the features you plan to use. This follows the principle of least privilege, which is a security best practice."
                   />
                   <FAQItem 
                     question="How do I set up role-based command permissions?"
@@ -167,16 +167,16 @@ export default function SupportPage() {
                 <h3 className="text-2xl font-bold mb-4">Features FAQ</h3>
                 <div className="space-y-1">
                   <FAQItem 
-                    question="Does Essence support music from Spotify?"
-                    answer="Yes! Essence can play music from Spotify, YouTube, SoundCloud, and other popular streaming platforms. Simply use the `/play` command followed by a song name, URL, or playlist link."
+                    question="Does essence support music from Spotify?"
+                    answer="Yes! essence can play music from Spotify, YouTube, SoundCloud, and other popular streaming platforms. Simply use the `/play` command followed by a song name, URL, or playlist link."
                   />
                   <FAQItem 
                     question="How many custom commands can I create?"
                     answer="Free users can create up to 10 custom commands per server. Premium subscribers can create up to 50 custom commands with advanced response options including embeds, buttons, and more."
                   />
                   <FAQItem 
-                    question="Can Essence send welcome messages with images?"
-                    answer="Yes, Essence's welcome system supports text, embeds, images, and even custom variables like {user}, {server}, and {memberCount} to create personalized welcome messages."
+                    question="Can essence send welcome messages with images?"
+                    answer="Yes, essence's welcome system supports text, embeds, images, and even custom variables like {user}, {server}, and {memberCount} to create personalized welcome messages."
                   />
                 </div>
               </TabsContent>
@@ -185,8 +185,8 @@ export default function SupportPage() {
                 <h3 className="text-2xl font-bold mb-4">Troubleshooting FAQ</h3>
                 <div className="space-y-1">
                   <FAQItem 
-                    question="Essence isn't responding to commands. What should I do?"
-                    answer="First, check that Essence has the necessary permissions in your server and the specific channel. Make sure you're using the correct prefix or slash commands. If the issue persists, try removing and re-adding the bot, or join our support Discord for assistance."
+                    question="essence isn't responding to commands. What should I do?"
+                    answer="First, check that essence has the necessary permissions in your server and the specific channel. Make sure you're using the correct prefix or slash commands. If the issue persists, try removing and re-adding the bot, or join our support Discord for assistance."
                   />
                   <FAQItem 
                     question="Music playback stops unexpectedly. How can I fix this?"
@@ -194,7 +194,7 @@ export default function SupportPage() {
                   />
                   <FAQItem 
                     question="How do I report a bug or suggest a feature?"
-                    answer="Join our Discord support server and use the #bug-reports channel to report issues or the #suggestions channel to request new features. You can also contact us via Twitter @EssenceBot."
+                    answer="Join our Discord support server and use the #bug-reports channel to report issues or the #suggestions channel to request new features. You can also contact us via Twitter @essenceBot."
                   />
                 </div>
               </TabsContent>
@@ -231,7 +231,7 @@ export default function SupportPage() {
                   <FaTwitter className="text-xl text-[#1DA1F2]" />
                 </div>
                 <h4 className="font-semibold mb-2">Twitter Support</h4>
-                <p className="text-muted-foreground text-sm mb-4">Tweet us @EssenceBot for assistance or updates.</p>
+                <p className="text-muted-foreground text-sm mb-4">Tweet us @essenceBot for assistance or updates.</p>
                 <Button asChild variant="outline" size="sm">
                   <a href="https://twitter.com/essencebot" target="_blank" rel="noopener noreferrer">
                     Tweet Us

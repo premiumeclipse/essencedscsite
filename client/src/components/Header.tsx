@@ -103,7 +103,7 @@ export default function Header() {
               ${theme === 'halloween' ? 'text-orange-500 group-hover:text-orange-400' : ''}
               ${theme === 'thanksgiving' ? 'text-amber-500 group-hover:text-amber-400' : ''}
               ${theme === 'default' ? 'text-foreground group-hover:text-primary' : ''}
-            `}>Essence</span>
+            `}>essence</span>
             <span className={`absolute -bottom-2 left-0 right-0 h-[2px] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left
               ${theme === 'christmas' ? 'bg-red-500' : ''}
               ${theme === 'halloween' ? 'bg-orange-500' : ''}

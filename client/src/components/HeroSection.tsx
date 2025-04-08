@@ -30,7 +30,7 @@ export default function HeroSection() {
               Take your Discord server to the <span className="gradient-text">next level</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-8 max-w-xl">
-              Essence enhances your Discord community with powerful moderation, music, games, and utility commands. All in one sleek, modern package.
+              essence enhances your Discord community with powerful moderation, music, games, and utility commands. All in one sleek, modern package.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button size="lg" asChild className="button-glow">
@@ -83,7 +83,7 @@ export default function HeroSection() {
                 <div className="bg-muted rounded-lg p-2">
                   <div className="flex items-center mb-4">
                     <div className="ml-3">
-                      <div className="text-sm font-semibold">Essence</div>
+                      <div className="text-sm font-semibold">essence</div>
                       <div className="text-xs text-muted-foreground">BOT</div>
                     </div>
                     <div className="ml-auto px-2 py-1 bg-[#57F287]/20 text-[#57F287] text-xs rounded-full">
@@ -101,7 +101,7 @@ export default function HeroSection() {
                     
                     <div className="flex items-start">
                       <div className="ml-11 bg-primary/10 px-3 py-3 rounded-lg rounded-tl-none w-full">
-                        <div className="text-xs text-primary font-medium mb-2">ESSENCE</div>
+                        <div className="text-xs text-primary font-medium mb-2">essence</div>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
                             <span className="text-sm">🔧 Moderation</span>
@@ -128,7 +128,7 @@ export default function HeroSection() {
                     
                     <div className="flex items-start">
                       <div className="ml-11 bg-primary/10 px-3 py-3 rounded-lg rounded-tl-none">
-                        <div className="text-xs text-primary font-medium mb-2">ESSENCE</div>
+                        <div className="text-xs text-primary font-medium mb-2">essence</div>
                         <p className="text-sm">🎵 Now playing: Lofi Beats to Study/Relax to</p>
                         <div className="mt-2 bg-background rounded-md h-2 w-full overflow-hidden">
                           <div className="bg-primary h-full w-1/3"></div>
