@@ -24,13 +24,13 @@ export default function CTASection() {
           
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to transform your Discord server?</h2>
-            <p className="text-muted-foreground text-lg mb-8">Add HarmonyBot to your server today and unlock the full potential of your community.</p>
+            <p className="text-muted-foreground text-lg mb-8">Add <span className="font-semibold">essence</span> to your server today and unlock the full potential of your community.</p>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button size="lg" asChild className="button-glow">
-                <a href="https://discord.com/oauth2/authorize" target="_blank" rel="noopener noreferrer">
+                <Link href="/discord/callback">
                   <FaDiscord className="mr-2" /> Add to Discord
-                </a>
+                </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <Link href="/support">

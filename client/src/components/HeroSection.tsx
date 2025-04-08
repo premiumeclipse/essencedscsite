@@ -34,9 +34,9 @@ export default function HeroSection() {
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button size="lg" asChild className="button-glow">
-                <a href="https://discord.com/oauth2/authorize" target="_blank" rel="noopener noreferrer">
+                <Link href="/discord/callback">
                   <FaDiscord className="mr-2" /> Add to Discord
-                </a>
+                </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <Link href="/commands">

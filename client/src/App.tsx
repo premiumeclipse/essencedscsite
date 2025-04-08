@@ -7,6 +7,8 @@ import HomePage from "@/pages/HomePage";
 import CommandsPage from "@/pages/CommandsPage";
 import SupportPage from "@/pages/SupportPage";
 import EditorPage from "@/pages/EditorPage";
+import ThankYouPage from "./pages/ThankYouPage";
+import DiscordCallbackPage from "./pages/DiscordCallbackPage";
 import MainLayout from "@/layouts/MainLayout";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { DevAuthProvider } from "@/contexts/DevAuthContext";
@@ -20,6 +22,8 @@ function Router() {
       <Route path="/editor" component={EditorPage} />
       <Route path="/commands" component={CommandsPage} />
       <Route path="/support" component={SupportPage} />
+      <Route path="/thank-you" component={ThankYouPage} />
+      <Route path="/discord/callback" component={DiscordCallbackPage} />
       <Route component={NotFound} />
     </Switch>
   );
