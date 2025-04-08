@@ -135,7 +135,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`w-[95%] max-w-md mx-auto overflow-hidden z-[100]
+      <DialogContent className={`w-[95%] max-w-md mx-auto overflow-y-auto max-h-[90vh] z-[100]
         ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
         ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
         ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
@@ -257,7 +257,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                     Manage global settings for the essence website.
                   </p>
                   
-                  <div className="mt-4">
+                  <div className="mt-4 max-h-[50vh] overflow-y-auto pr-2">
                     <SiteSettingsPanel />
                   </div>
                 </div>
@@ -273,7 +273,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                     Manage bot commands, text styles, and global content.
                   </p>
                   
-                  <div className="mt-2">
+                  <div className="mt-2 max-h-[50vh] overflow-y-auto pr-2">
                     <ContentManager />
                   </div>
                   
