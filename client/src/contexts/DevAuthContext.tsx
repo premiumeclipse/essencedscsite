@@ -9,7 +9,7 @@ interface DevAuthContextType {
 const DevAuthContext = createContext<DevAuthContextType | undefined>(undefined);
 
 // This is a simple example password - in a real app, this would be stored securely
-const CORRECT_PASSWORD = "essencediscordbot@dev";
+const CORRECT_PASSWORD = "essence2023";
 
 export function DevAuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);

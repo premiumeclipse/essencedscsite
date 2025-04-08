@@ -27,13 +27,9 @@ import {
   type SiteConfig,
   type InsertSiteConfig
 } from "@shared/schema";
-import session from "express-session";
-import createMemoryStore from "memorystore";
 
 // Expand the storage interface with CRUD methods
 export interface IStorage {
-  // Session store for authentication
-  sessionStore: session.Store;
   
   // User methods (existing)
   getUser(id: number): Promise<User | undefined>;
@@ -94,9 +90,6 @@ export class MemStorage implements IStorage {
   private globalThemes: Map<number, GlobalTheme>;
   private siteConfigs: Map<number, SiteConfig>;
   
-  // Session store for authentication
-  sessionStore: session.Store;
-  
   currentId: number;
 
   constructor() {
@@ -110,12 +103,6 @@ export class MemStorage implements IStorage {
     this.globalThemes = new Map();
     this.siteConfigs = new Map();
     this.currentId = 1;
-    
-    // Initialize memory store for sessions
-    const MemoryStore = createMemoryStore(session);
-    this.sessionStore = new MemoryStore({
-      checkPeriod: 86400000 // prune expired entries every 24h
-    });
     
     // Initialize with sample data
     this.initSampleData();
