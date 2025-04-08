@@ -11,12 +11,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme, ThemeType } from "@/contexts/ThemeContext";
-import { Check, Snowflake, Skull, Leaf, Lock, X, Loader2, Settings, Cog } from "lucide-react";
+import { Check, Snowflake, Skull, Leaf, Lock, X, Loader2, Settings, Cog, FileEdit, ExternalLink } from "lucide-react";
 import { useDevAuth } from "@/contexts/DevAuthContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import SiteSettingsPanel from "@/components/SiteSettingsPanel";
+import ContentManager from "@/components/ContentManager";
 
 interface DevPortalProps {
   open: boolean;
@@ -161,7 +162,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
         {isAuthenticated ? (
           <>
             <Tabs defaultValue="themes" value={selectedTab} onValueChange={setSelectedTab}>
-              <TabsList className={`grid w-full grid-cols-3 bg-transparent border 
+              <TabsList className={`grid w-full grid-cols-4 bg-transparent border 
               ${theme === 'christmas' ? 'border-red-600/30 [&>*[data-state=active]]:bg-red-600/20 [&>*[data-state=active]]:text-red-600' : ''}
               ${theme === 'halloween' ? 'border-orange-600/30 [&>*[data-state=active]]:bg-orange-600/20 [&>*[data-state=active]]:text-orange-600' : ''}
               ${theme === 'thanksgiving' ? 'border-amber-600/30 [&>*[data-state=active]]:bg-amber-600/20 [&>*[data-state=active]]:text-amber-600' : ''}
@@ -185,6 +186,18 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                   ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
                   ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
                 `}>Settings</TabsTrigger>
+                <TabsTrigger value="content" className={`
+                  data-[state=active]:shadow-none
+                  ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
+                  ${theme === 'halloween' ? 'hover:bg-orange-600/10 hover:text-orange-500' : ''}
+                  ${theme === 'thanksgiving' ? 'hover:bg-amber-600/10 hover:text-amber-500' : ''}
+                  ${theme === 'default' ? 'hover:bg-accent/80 hover:text-accent-foreground' : ''}
+                `}>
+                  <div className="flex items-center gap-1">
+                    <FileEdit className="h-4 w-4 mr-1" />
+                    <span>Content</span>
+                  </div>
+                </TabsTrigger>
                 <TabsTrigger value="about" className={`
                   data-[state=active]:shadow-none
                   ${theme === 'christmas' ? 'hover:bg-red-600/10 hover:text-red-500' : ''}
@@ -246,6 +259,31 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                   
                   <div className="mt-4">
                     <SiteSettingsPanel />
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="content" className="py-4">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileEdit className="h-5 w-5 text-muted-foreground" />
+                    <h3 className="font-medium">Content Management</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Manage bot commands, text styles, and global content.
+                  </p>
+                  
+                  <div className="mt-2">
+                    <ContentManager />
+                  </div>
+                  
+                  <div className="mt-4 flex justify-center">
+                    <Button asChild variant="outline" className="text-sm" size="sm">
+                      <a href="/editor" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Open Web Editor
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </TabsContent>

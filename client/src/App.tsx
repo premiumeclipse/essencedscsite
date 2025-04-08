@@ -7,6 +7,7 @@ import HomePage from "@/pages/HomePage";
 import CommandsPage from "@/pages/CommandsPage";
 import SupportPage from "@/pages/SupportPage";
 import AuthPage from "@/pages/auth-page";
+import EditorPage from "@/pages/EditorPage";
 import MainLayout from "@/layouts/MainLayout";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { DevAuthProvider } from "@/contexts/DevAuthContext";
@@ -19,6 +20,7 @@ function Router() {
   return (
     <Switch>
       <ProtectedRoute path="/" component={HomePage} />
+      <ProtectedRoute path="/editor" component={EditorPage} />
       <Route path="/auth" component={AuthPage} />
       <Route path="/commands" component={CommandsPage} />
       <Route path="/support" component={SupportPage} />
