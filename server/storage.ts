@@ -22,7 +22,10 @@ import {
   type InsertTestimonial,
   globalThemes,
   type GlobalTheme,
-  type InsertGlobalTheme
+  type InsertGlobalTheme,
+  siteConfigs,
+  type SiteConfig,
+  type InsertSiteConfig
 } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
@@ -73,6 +76,11 @@ export interface IStorage {
   getGlobalTheme(): Promise<GlobalTheme | undefined>;
   createGlobalTheme(theme: InsertGlobalTheme): Promise<GlobalTheme>;
   updateGlobalTheme(name: string): Promise<GlobalTheme | undefined>;
+  
+  // Site Config methods
+  getSiteConfig(): Promise<SiteConfig | undefined>;
+  createSiteConfig(config: InsertSiteConfig): Promise<SiteConfig>;
+  updateSiteConfig(id: number, config: Partial<InsertSiteConfig>): Promise<SiteConfig | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -84,6 +92,7 @@ export class MemStorage implements IStorage {
   private faqs: Map<number, Faq>;
   private testimonials: Map<number, Testimonial>;
   private globalThemes: Map<number, GlobalTheme>;
+  private siteConfigs: Map<number, SiteConfig>;
   
   // Session store for authentication
   sessionStore: session.Store;
@@ -99,6 +108,7 @@ export class MemStorage implements IStorage {
     this.faqs = new Map();
     this.testimonials = new Map();
     this.globalThemes = new Map();
+    this.siteConfigs = new Map();
     this.currentId = 1;
     
     // Initialize memory store for sessions
@@ -114,6 +124,23 @@ export class MemStorage implements IStorage {
     const themeId = this.currentId++;
     const defaultTheme: GlobalTheme = { id: themeId, name: 'default' };
     this.globalThemes.set(themeId, defaultTheme);
+
+    // Initialize with default site config (directly to avoid async issues in constructor)
+    const configId = this.currentId++;
+    const defaultConfig: SiteConfig = {
+      id: configId,
+      siteName: "essence",
+      logoText: "essence",
+      primaryColor: "#7c3aed",
+      discordInviteUrl: "https://discord.com/oauth2/authorize",
+      showStatistics: true,
+      showTestimonials: true,
+      maintenanceMode: false,
+      maintenanceMessage: "We are currently performing maintenance. Please check back later.",
+      footerText: "© 2025 essence bot. All rights reserved.",
+      customCss: ""
+    };
+    this.siteConfigs.set(configId, defaultConfig);
   }
 
   private initSampleData() {
@@ -533,6 +560,56 @@ export class MemStorage implements IStorage {
     const updatedTheme: GlobalTheme = { ...theme, name };
     this.globalThemes.set(theme.id, updatedTheme);
     return updatedTheme;
+  }
+
+  // Site Config methods
+  async getSiteConfig(): Promise<SiteConfig | undefined> {
+    // There should only be one site config, so return the first one
+    return Array.from(this.siteConfigs.values())[0];
+  }
+
+  async createSiteConfig(insertConfig: InsertSiteConfig): Promise<SiteConfig> {
+    const id = this.currentId++;
+    // Explicitly create a SiteConfig object with all required properties
+    const config: SiteConfig = {
+      id,
+      siteName: insertConfig.siteName,
+      logoText: insertConfig.logoText,
+      primaryColor: insertConfig.primaryColor,
+      discordInviteUrl: insertConfig.discordInviteUrl,
+      showStatistics: insertConfig.showStatistics,
+      showTestimonials: insertConfig.showTestimonials,
+      maintenanceMode: insertConfig.maintenanceMode,
+      maintenanceMessage: insertConfig.maintenanceMessage,
+      footerText: insertConfig.footerText,
+      customCss: insertConfig.customCss,
+    };
+    this.siteConfigs.set(id, config);
+    return config;
+  }
+
+  async updateSiteConfig(id: number, partialConfig: Partial<InsertSiteConfig>): Promise<SiteConfig | undefined> {
+    const currentConfig = this.siteConfigs.get(id);
+    if (!currentConfig) return undefined;
+    
+    // Ensure we maintain the required type structure by combining the objects properly
+    // All properties that might be undefined in partialConfig will keep their values from currentConfig
+    const updatedConfig: SiteConfig = {
+      id: currentConfig.id,
+      siteName: partialConfig.siteName !== undefined ? partialConfig.siteName : currentConfig.siteName,
+      logoText: partialConfig.logoText !== undefined ? partialConfig.logoText : currentConfig.logoText,
+      primaryColor: partialConfig.primaryColor !== undefined ? partialConfig.primaryColor : currentConfig.primaryColor,
+      discordInviteUrl: partialConfig.discordInviteUrl !== undefined ? partialConfig.discordInviteUrl : currentConfig.discordInviteUrl,
+      showStatistics: partialConfig.showStatistics !== undefined ? partialConfig.showStatistics : currentConfig.showStatistics,
+      showTestimonials: partialConfig.showTestimonials !== undefined ? partialConfig.showTestimonials : currentConfig.showTestimonials,
+      maintenanceMode: partialConfig.maintenanceMode !== undefined ? partialConfig.maintenanceMode : currentConfig.maintenanceMode,
+      maintenanceMessage: partialConfig.maintenanceMessage !== undefined ? partialConfig.maintenanceMessage : currentConfig.maintenanceMessage,
+      footerText: partialConfig.footerText !== undefined ? partialConfig.footerText : currentConfig.footerText,
+      customCss: partialConfig.customCss !== undefined ? partialConfig.customCss : currentConfig.customCss,
+    };
+    
+    this.siteConfigs.set(id, updatedConfig);
+    return updatedConfig;
   }
 }
 

@@ -138,3 +138,34 @@ export const insertGlobalThemeSchema = createInsertSchema(globalThemes).pick({
 
 export type InsertGlobalTheme = z.infer<typeof insertGlobalThemeSchema>;
 export type GlobalTheme = typeof globalThemes.$inferSelect;
+
+// Site Configuration schema
+export const siteConfigs = pgTable("site_configs", {
+  id: serial("id").primaryKey(),
+  siteName: text("site_name").notNull().default("essence"),
+  logoText: text("logo_text").notNull().default("essence"),
+  primaryColor: text("primary_color").notNull().default("#7c3aed"),
+  discordInviteUrl: text("discord_invite_url").notNull().default("https://discord.com/oauth2/authorize"),
+  showStatistics: boolean("show_statistics").notNull().default(true),
+  showTestimonials: boolean("show_testimonials").notNull().default(true),
+  maintenanceMode: boolean("maintenance_mode").notNull().default(false),
+  maintenanceMessage: text("maintenance_message").default("We are currently performing maintenance. Please check back later."),
+  footerText: text("footer_text").notNull().default("© 2025 essence bot. All rights reserved."),
+  customCss: text("custom_css").default(""),
+});
+
+export const insertSiteConfigSchema = createInsertSchema(siteConfigs).pick({
+  siteName: true,
+  logoText: true,
+  primaryColor: true,
+  discordInviteUrl: true,
+  showStatistics: true,
+  showTestimonials: true,
+  maintenanceMode: true,
+  maintenanceMessage: true,
+  footerText: true,
+  customCss: true,
+});
+
+export type InsertSiteConfig = z.infer<typeof insertSiteConfigSchema>;
+export type SiteConfig = typeof siteConfigs.$inferSelect;

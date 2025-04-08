@@ -125,6 +125,76 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Site Config endpoints
+  apiRouter.get("/site-config", async (_req: Request, res: Response) => {
+    try {
+      const config = await storage.getSiteConfig();
+      if (!config) {
+        return res.status(404).json({ message: "Site configuration not found" });
+      }
+      res.json(config);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch site configuration" });
+    }
+  });
+  
+  apiRouter.patch("/site-config/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID" });
+      }
+      
+      const config = await storage.getSiteConfig();
+      if (!config) {
+        return res.status(404).json({ message: "Site configuration not found" });
+      }
+      
+      const allowedFields = [
+        'siteName', 'logoText', 'primaryColor', 'discordInviteUrl',
+        'showStatistics', 'showTestimonials', 'maintenanceMode',
+        'maintenanceMessage', 'footerText', 'customCss'
+      ];
+      
+      // Validate input fields
+      const updates: Record<string, any> = {};
+      for (const field of allowedFields) {
+        if (field in req.body) {
+          const value = req.body[field];
+          
+          // Type validation for boolean fields
+          if (['showStatistics', 'showTestimonials', 'maintenanceMode'].includes(field)) {
+            if (typeof value !== 'boolean') {
+              return res.status(400).json({ message: `Field '${field}' must be a boolean` });
+            }
+          }
+          
+          // Type validation for string fields
+          if (['siteName', 'logoText', 'primaryColor', 'discordInviteUrl', 'maintenanceMessage', 'footerText', 'customCss'].includes(field)) {
+            if (typeof value !== 'string') {
+              return res.status(400).json({ message: `Field '${field}' must be a string` });
+            }
+          }
+          
+          updates[field] = value;
+        }
+      }
+      
+      if (Object.keys(updates).length === 0) {
+        return res.status(400).json({ message: "No valid fields to update" });
+      }
+      
+      const updatedConfig = await storage.updateSiteConfig(id, updates);
+      if (!updatedConfig) {
+        return res.status(500).json({ message: "Failed to update site configuration" });
+      }
+      
+      res.json(updatedConfig);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update site configuration" });
+    }
+  });
+
   // Register API routes with /api prefix
   app.use("/api", apiRouter);
 

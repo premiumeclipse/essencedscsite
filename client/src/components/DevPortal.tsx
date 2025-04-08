@@ -11,11 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme, ThemeType } from "@/contexts/ThemeContext";
-import { Check, Snowflake, Skull, Leaf, Lock, X, Loader2, Settings } from "lucide-react";
+import { Check, Snowflake, Skull, Leaf, Lock, X, Loader2, Settings, Cog } from "lucide-react";
 import { useDevAuth } from "@/contexts/DevAuthContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import SiteSettingsPanel from "@/components/SiteSettingsPanel";
 
 interface DevPortalProps {
   open: boolean;
@@ -235,31 +236,16 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
               <TabsContent value="settings" className="py-4">
                 <div className="space-y-4">
-                  <h3 className="font-medium">Advanced Settings</h3>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Cog className="h-5 w-5 text-muted-foreground" />
+                    <h3 className="font-medium">Site Configuration</h3>
+                  </div>
                   <p className="text-sm text-muted-foreground">
-                    Access to developer-only settings and configurations.
+                    Manage global settings for the essence website.
                   </p>
                   
-                  <div className="mt-4 space-y-4">
-                    <div className="p-4 bg-muted rounded-md">
-                      <h4 className="text-sm font-medium mb-2">Debug Mode</h4>
-                      <p className="text-xs text-muted-foreground mb-3">
-                        Enable advanced logging and debugging features.
-                      </p>
-                      <Button size="sm" variant="outline">
-                        Enable Debug Mode
-                      </Button>
-                    </div>
-                    
-                    <div className="p-4 bg-muted rounded-md">
-                      <h4 className="text-sm font-medium mb-2">API Configuration</h4>
-                      <p className="text-xs text-muted-foreground mb-3">
-                        Configure API endpoints and settings.
-                      </p>
-                      <Button size="sm" variant="outline">
-                        Manage API Settings
-                      </Button>
-                    </div>
+                  <div className="mt-4">
+                    <SiteSettingsPanel />
                   </div>
                 </div>
               </TabsContent>
