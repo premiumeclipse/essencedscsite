@@ -135,7 +135,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`w-[95%] max-w-md mx-auto overflow-y-auto max-h-[90vh] z-[100]
+      <DialogContent className={`w-[95%] max-w-[90vw] sm:max-w-md mx-auto overflow-y-auto max-h-[90vh] z-[100]
         ${theme === 'christmas' ? 'border-red-600 bg-gradient-to-b from-red-950/40 to-green-950/40' : ''}
         ${theme === 'halloween' ? 'border-orange-600 bg-gradient-to-b from-orange-950/40 to-purple-950/40' : ''}
         ${theme === 'thanksgiving' ? 'border-amber-600 bg-gradient-to-b from-amber-950/40 to-orange-950/40' : ''}
@@ -214,7 +214,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                     Change the appearance of the essence website with these seasonal themes.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 mt-4">
                     {themeOptions.map((option) => (
                       <Button
                         key={option.value}
@@ -474,7 +474,7 @@ export default function DevPortal({ open, onOpenChange }: DevPortalProps) {
                         Change the appearance of the essence website with these seasonal themes.
                       </p>
                       
-                      <div className="grid grid-cols-2 gap-3 mt-4">
+                      <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 mt-4">
                         {themeOptions.map((option) => (
                           <Button
                             key={option.value}
