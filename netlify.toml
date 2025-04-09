@@ -7,7 +7,7 @@
   command = "npm run dev"
   port = 5000
   targetPort = 5000
-  publish = "client/dist"
+  publish = "client"
   autoLaunch = true
 
 [[redirects]]
